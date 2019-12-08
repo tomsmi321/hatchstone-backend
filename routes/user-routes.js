@@ -1,14 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { index } = require('../controllers/users-controller');
 
-const index = (req, res, next) => {
-    try {
-        res.send('index page')
-    } catch(err) {
-        res.status(500).send(err);
-    }
-}
+router.get('/', index);
 
-module.exports = {
-    index
-};
+module.exports = router;
