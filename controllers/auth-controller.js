@@ -28,14 +28,20 @@ const register = async (req, res, next) => {
 
 // /POST login 
 const login = (req, res, next) => {
-    try {
-        res.send('login route')
-    } catch(err) {
-        console.log(err);
-        res.status(404).send('an error occured');
-    }    
+    const { email, password } = req.body;
+    if(email && password) {
+        try {
+            const user = await findOne({email: email});
+            res.send(user);
+        } catch(err) {
+            console.log(err);
+            res.status(404).send('an error occured');
+        }   
+    } else {
+        res.status(403).send('incorrect details');
+    }
+    
 }
-
 
 
 module.exports = {
