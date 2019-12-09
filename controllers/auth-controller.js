@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const { checkPassword, generateNewUser, generateJwt } = require('../utils/auth-utils');
+const { checkPassword, generateNewUser, generateJwt, loginUser } = require('../utils/auth-utils');
 
 
 // /POST register 
@@ -19,7 +19,7 @@ const register = async (req, res, next) => {
             }
         } catch(err) {
             console.log(err);
-            res.status(404).send('an error eccured');
+            return res.status(404).send('an error eccured');
         }
     } else {
         return res.status(403).send('incorrect details');
@@ -27,20 +27,19 @@ const register = async (req, res, next) => {
 }
 
 // /POST login 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
     const { email, password } = req.body;
     if(email && password) {
         try {
-            const user = await findOne({email: email});
-            res.send(user);
+            const user = await User.findOne({email: email});
+            return await loginUser(req, res, user, password)
         } catch(err) {
             console.log(err);
-            res.status(404).send('an error occured');
+            return res.status(404).send('an error occured');
         }   
     } else {
-        res.status(403).send('incorrect details');
-    }
-    
+        return res.status(403).send('incorrect details');
+    }  
 }
 
 

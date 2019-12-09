@@ -1,16 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
 
 
 // /GET return all users 
-const index = (req, res, next) => {
+const index = async (req, res, next) => {
     try {
-        res.send('index page')
+        const users = await User.find();
+        res.send(users);
     } catch(err) {
-        res.status(500).send(err);
+        console.log(err);
+        res.status(404).send('an error occured');
     }
 }
 
 module.exports = {
     index
-};
+}
