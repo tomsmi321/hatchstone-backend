@@ -1,5 +1,6 @@
 // import mongoose and Schema
-const { mongoose, Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // create the user Schema
 const userSchema = new Schema({

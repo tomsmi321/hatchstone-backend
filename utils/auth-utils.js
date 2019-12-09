@@ -15,7 +15,7 @@ const checkPassword = async (password, hash) => {
 
 // create a new user
 const generateNewUser = async (email, password) => {
-    const hash = generateHash(password);
+    const hash = await generateHash(password);
     const newUser = await User.create({
         email: email,
         password: hash
@@ -24,7 +24,7 @@ const generateNewUser = async (email, password) => {
 }
 
 // create a signed JWT token
-const generateJwt = (email) => {
+const generateJwt = ({ email }) => {
     const payload = {email: email}
     const privateKey = process.env.JWT_SECRET;
     const expiry = {expiresIn: '1hr'};

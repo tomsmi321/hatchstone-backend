@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+
+// /GET return all users 
 const index = (req, res, next) => {
     try {
         res.send('index page')
