@@ -3,7 +3,7 @@ const { checkPassword, generateNewUser, generateJwt, loginUser } = require('../u
 
 
 // /POST register 
-const register = async (req, res, next) => {
+const register = async (req, res) => {
     const { email, password } = req.body
     if(email && password) {
         try {
@@ -12,8 +12,8 @@ const register = async (req, res, next) => {
             if(!existingUser) {
                 // if no existing user create a new user
                 const user = await generateNewUser(email, password);
-                const jwtToken = await generateJwt(user);
-                return res.send({jwtToken});
+                const token = await generateJwt(user);
+                return res.send({token});
             } else {
                 return res.status(403).send('user already exists')
             }
@@ -27,7 +27,7 @@ const register = async (req, res, next) => {
 }
 
 // /POST login 
-const login = async (req, res, next) => {
+const login = async (req, res) => {
     const { email, password } = req.body;
     if(email && password) {
         try {

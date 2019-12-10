@@ -35,8 +35,9 @@ const loginUser = async (req, res, user, password) => {
     if(user) {
         const validPassword = await checkPassword(password, user.password);
         if(validPassword) {
-            const jwtToken = generateJwt(user);
-            return res.send({jwtToken});
+            const token = generateJwt(user);
+            console.log(req.user);
+            return res.send({token});
         } else {
             res.status(403).send('incorrect details');
         }
