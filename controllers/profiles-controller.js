@@ -1,52 +1,48 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const Profile = require('../models/Profile');
 
-
-// note: a new user is created on the /auth/register route
-
-
-// GET /users
+// GET /profiles
 const index = async (req, res, next) => {
     try {
-        const users = await User.find();
-        return  res.send(users);
+        const profiles = await Profile.find();
+        return  res.send(profiles);
     } catch(err) {
         console.log(err);
         return res.status(404).send('an error occurred');
     }
 }
 
-// GET /users/:id
+// GET /profiles/:id
 const show = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const user = await User.findById(id);
-        return res.send(user);
+        const profile = await Profile.findById(id);
+        return res.send(profile);
     } catch(err) {
         console.log(err);
         return res.status(500).send('an error occurred');
     }
 }
 
-// PUT /users/:id
+// PUT /profiles/:id
 const update = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const updatedUser = await User.findByIdAndUpdate(id, req.body);
-        return res.send(updatedUser);
+        const updatedProfile = await Profile.findByIdAndUpdate(id, req.body);
+        return res.send(updatedProfile);
     } catch(err) {
         console.log(err);
         return res.status(500).send('an error occurred');
     }
 }
 
-// DELETE /users/:id
+// DELETE /profiles/:id
 const destroy = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const deletedUser = await User.findByIdAndDelete(id);
-        res.send(deletedUser);
+        const deletedProfile = await Profile.findByIdAndDelete(id);
+        res.send(deletedProfile);
     } catch(err) {
         console.log(err);
         res.status(500).send('an error occurred');
@@ -54,8 +50,7 @@ const destroy = async (req, res, next) => {
 }
 
 module.exports = {
-    // create,
-    index,
+    index, 
     show,
     update,
     destroy

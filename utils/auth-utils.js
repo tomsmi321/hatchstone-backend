@@ -24,8 +24,13 @@ const generateNewUser = async (email, password) => {
 }
 
 // create a signed JWT token
-const generateJwt = ({ email }) => {
-    const payload = {email: email}
+const generateJwt = (user) => {
+    const { _id, email, admin } = user;
+    const payload = {
+        id: _id,
+        email: email,
+        admin: admin
+    }
     const privateKey = process.env.JWT_SECRET;
     const expiry = {expiresIn: '1hr'};
     return jwt.sign(payload, privateKey, expiry)
