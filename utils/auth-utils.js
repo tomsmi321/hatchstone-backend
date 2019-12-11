@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const AWS = require('aws-sdk')
+
+//AWS Credentials
 
 // generate a hash from password
 const generateHash = async (password) => {

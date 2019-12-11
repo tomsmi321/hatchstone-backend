@@ -41,6 +41,12 @@ const profileSchema = new Schema({
     dateStarted: {
         type: Date,
         default: Date.now
+    },
+    profileImage: {
+        type: String
+    },
+    documents: {
+        type: [String]
     }
 })
 
