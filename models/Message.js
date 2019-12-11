@@ -16,6 +16,10 @@ const messageSchema = new Schema({
     content: {
         type: String,
         required: true
+    },
+    dateCreated: {
+        type: Date,
+        default: Date.now
     }
 })
 
