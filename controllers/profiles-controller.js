@@ -64,7 +64,9 @@ const destroy = async (req, res, next) => {
 //Desc:     Route for user to upload important documents to s3
 //Route :  /profiles/:id/uploadDocument
 //Access:   Private
-const uploadDocument =  async (req,res) => {
+
+
+const uploadDocument  =  async (req,res,next) => {
     try {
         //get Profile from params
         const { id } = req.params
@@ -84,20 +86,21 @@ const uploadDocument =  async (req,res) => {
             ContentType: file[0].mimetype
         }
 
-        // upload to s3 and return image urls
-        s3credentials.upload(fileParams, (err, data) => {
+        // upload to s3 and return image url
+        const response = s3credentials.upload(fileParams, (err, data) => {
             if (err) {
                 console.log(err)
                 res.send('Upload to S3 failed')
             } else {
                 console.log(data.Location)
                 console.log("Uploaded to S3 Sucessfully")
+                return data
             }
         })
 
-        //push image urls to database
-        await Profile.update({_id: id},{ $push: { documents: data.location }})
-
+        //push image url to database
+        const updatedProfile = await Profile.findByIdAndUpdate(id,{ $push: { documents: response.location }})
+        return res.send(updatedProfile)
     } catch (err) {
         console.log(err)
         res.status(500).send("Server Error")
