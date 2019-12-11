@@ -8,5 +8,6 @@ router.use(express.json())
 router.use('/users', require('./user-routes'));
 router.use('/auth', require('./auth-routes'));
 router.use('/profiles', require('./profile-routes'));
+router.use('/seed', require('./seed-route'));
 
 module.exports = router;
