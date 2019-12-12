@@ -2,7 +2,6 @@
 const express = require('express');
 const router = express.Router();
 const AWS = require('aws-sdk')
-const upload = require('../middleware/multer-upload-middleware.js')
 
 //Import Profile Model
 const Profile = require('../models/Profile');
@@ -64,9 +63,7 @@ const destroy = async (req, res, next) => {
 //Desc:     Route for user to upload important documents to s3
 //Route :  /profiles/:id/uploadDocument
 //Access:   Private
-
-
-const uploadDocument  =  async (req,res,next) => {
+const uploadDocument = async (req,res,next) => {
     try {
         //get Profile from params
         const { id } = req.params
@@ -87,32 +84,35 @@ const uploadDocument  =  async (req,res,next) => {
         }
 
         // upload to s3 and return image url
-        const response = s3credentials.upload(fileParams, (err, data) => {
+        s3credentials.upload(fileParams, (err, data) => {
             if (err) {
                 console.log(err)
                 res.send('Upload to S3 failed')
             } else {
-                console.log(data.Location)
-                console.log("Uploaded to S3 Sucessfully")
-                return data
+                const url = data.Location
+                const profile =  Profile.findByIdAndUpdate(id,{ $push: { documents: url }})
+                .then(profile => {
+                
+                    console.log(profile);
+                })
             }
         })
-
-        //push image url to database
-        const updatedProfile = await Profile.findByIdAndUpdate(id,{ $push: { documents: response.location }})
-        return res.send(updatedProfile)
+        
+    
+        const profile = await Profile.findById(id)
+    
+        return res.send(profile)
     } catch (err) {
         console.log(err)
         res.status(500).send("Server Error")
     }
 }
 
-
 module.exports = {
     index, 
     show,
     update,
     destroy,
-    uploadDocument,
-    upload
+    uploadDocument
+    
 }

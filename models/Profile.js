@@ -21,6 +21,9 @@ const profileSchema = new Schema({
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: 'User'
     // },
+    userId: {
+        type: String
+    },
     address: {
         type: String,
         trim: true,

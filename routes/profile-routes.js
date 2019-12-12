@@ -22,8 +22,8 @@ router.get('/:id', show);
 router.put('/:id', update);
 router.delete('/:id', destroy);
 
-// .multer will be used in all subsequent requests so put this at the bottom
-router.use(multer({ storage: storage }).fields(fields))
-router.post('/:id/uploadDocument', uploadDocument)
+// .multe will be used in all subsequent requests so put this at the bottom
+// router.use(multer({ storage: storage }).fields(fields))
+router.post('/:id/uploadDocument', multer({storage: storage}).fields(fields), uploadDocument)
 
 module.exports = router;
