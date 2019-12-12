@@ -17,9 +17,12 @@ const profileSchema = new Schema({
         type: String,
         trim: true
     },
+    // userId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User'
+    // },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String
     },
     address: {
         type: String,
@@ -41,6 +44,12 @@ const profileSchema = new Schema({
     dateStarted: {
         type: Date,
         default: Date.now
+    },
+    profileImage: {
+        type: String
+    },
+    documents: {
+        type: [String]
     }
 })
 
