@@ -1,19 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer')
-const { index, show, update, destroy, uploadDocument } = require('../controllers/profiles-controller');
-
-
+const { index, show, update, destroy, uploadDocument, uploadProfileImage } = require('../controllers/profiles-controller');
 // const { checkAuth } = require('../middleware/auth-middleware');
-
-const fields = [
-    {name: 'name'},
-    {name: 'file'}
-  ]
 
 //Multer Settings
 const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage }).fields(fields);
+const fields = [
+  {name: 'name'},
+  {name: 'file'}
+]
 
 
 //routes
@@ -25,5 +21,6 @@ router.delete('/:id', destroy);
 // .multe will be used in all subsequent requests so put this at the bottom
 // router.use(multer({ storage: storage }).fields(fields))
 router.post('/:id/uploadDocument', multer({storage: storage}).fields(fields), uploadDocument)
+router.post('/:id/uploadProfileImage', multer({storage: storage}).fields(fields), uploadProfileImage)
 
 module.exports = router;
