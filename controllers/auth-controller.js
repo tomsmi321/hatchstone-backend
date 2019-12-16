@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const { checkPassword, generateJwt, loginUser } = require('../utils/auth-utils');
+const { generateJwt, loginUser } = require('../utils/auth-utils');
 
 
 // /POST register 
