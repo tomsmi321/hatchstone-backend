@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const AWS = require('aws-sdk')
+
+//AWS Credentials
 
 // compare a plaintext password against a hash stored in the database
 const checkPassword = async (password, hash) => {

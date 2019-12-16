@@ -13,7 +13,9 @@ const db = 'hatchstone'
 // db options
 const dbOptions = {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
 }
 
 const connectDb = async (db, dbOptions) => {

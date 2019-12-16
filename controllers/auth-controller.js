@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const { generateJwt, loginUser } = require('../utils/auth-utils');
 
-
 // /POST register 
 const register = async (req, res) => {
     const { email, password } = req.body
