@@ -20,6 +20,10 @@ const userSchema = new Schema({
     admin: {
         type: Boolean,
         default: false
+    },
+    isActive: {
+        type: Boolean,
+        default: true
     }
 });
 
