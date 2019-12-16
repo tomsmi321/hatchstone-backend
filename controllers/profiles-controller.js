@@ -1,12 +1,12 @@
-//Dependencies
+// Dependencies
 const express = require('express');
 const router = express.Router();
 const AWS = require('aws-sdk')
 
-//Import Profile Model
+// Import Profile Model
 const Profile = require('../models/Profile');
 
-//AWS Credentials
+// AWS Credentials
 let s3credentials = new AWS.S3({
     accessKeyId: process.env.ACCESSKEYID,
     secretAccessKey: process.env.SECRETACCESSKEY

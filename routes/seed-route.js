@@ -5,8 +5,6 @@ const User = require('../models/User');
 const Profile = require('../models/Profile')
 const { seedDb, clearDb } = require('../seeding/seed');
 
-
-
 router.get('/seed-db', async (req, res, next) => {
     try {
         await clearDb();
@@ -14,7 +12,7 @@ router.get('/seed-db', async (req, res, next) => {
 
         await seedDb();
         console.log('Db successfully seeded 👍');
-        
+
         res.send("Db successfully Seeded");
     } catch(err) {
         console.log(err);
