@@ -6,16 +6,16 @@ const messageSchema = new Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        // required: true
+        required: true
     },
     conversationId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Conversation',
-        // required: true
+        required: true
     },
     content: {
         type: String,
-        // required: true
+        required: true
     },
     dateCreated: {
         type: Date,

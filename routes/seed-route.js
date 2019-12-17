@@ -11,7 +11,7 @@ router.get('/seed-db', async (req, res, next) => {
         console.log('Db successfully cleared 👍');
 
         await seedDb();
-        console.log('Db successfully seeded 👍');
+        console.log('Db seeding completed 👍');
 
         res.send("Db successfully Seeded");
     } catch(err) {
