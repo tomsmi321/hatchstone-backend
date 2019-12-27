@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const { checkPassword, generateNewUser, generateJwt, loginUser } = require('../utils/auth-utils');
+const { generateJwt, loginUser } = require('../utils/auth-utils');
 
 // /POST register 
 const register = async (req, res) => {
@@ -9,9 +9,12 @@ const register = async (req, res) => {
             // check if there is an existing user
             const existingUser = await User.findOne({email: email});
             if(!existingUser) {
-                // if no existing user create a new user
-                const user = await generateNewUser(email, password);
-                const token = await generateJwt(user);
+                // if no existing user create a new user, password is hashed in the model
+                const newUser = await User.create({
+                    email: email,
+                    password: password
+                })
+                const token = await generateJwt(newUser);
                 return res.send({token});
             } else {
                 return res.status(403).send('user already exists')
