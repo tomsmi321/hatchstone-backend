@@ -1,8 +1,6 @@
 const User = require('../models/User');
 
-
 // note: a new user is created on the /auth/register route
-
 
 // GET /users
 const index = async (req, res, next) => {
@@ -44,7 +42,7 @@ const destroy = async (req, res, next) => {
     try {
         const { id } = req.params;
         const deletedUser = await User.findByIdAndDelete(id);
-        res.send(deletedUser);
+        return res.send(deletedUser);
     } catch(err) {
         console.log(err);
         res.status(500).send('an error occurred');

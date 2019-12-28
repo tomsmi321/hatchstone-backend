@@ -1,10 +1,8 @@
 // Dependencies
 const AWS = require('aws-sdk')
-const mongoose = require('mongoose');
 
 // Import Profile and User Models
 const Profile = require('../models/Profile');
-const User = require('../models/User');
 
 // AWS Credentials
 let s3credentials = new AWS.S3({
@@ -22,7 +20,7 @@ const create = async (req, res, next) => {
             throw 'user profile already exists';
         }
         const newProfile = await Profile.create(req.body);
-        res.send(newProfile);
+        return res.send(newProfile);
     } catch(err) {
         console.log(err);
         return res.status(404).send('an error occurred');
@@ -35,7 +33,7 @@ const index = async (req, res, next) => {
     try {
         const profiles = await Profile.find()
         .populate('userId');
-        res.send(profiles);
+        return res.send(profiles);
     } catch(err) {
         console.log(err);
         return res.status(404).send('an error occurred');
@@ -43,11 +41,12 @@ const index = async (req, res, next) => {
 }
 
 // GET /profiles/:id
-// this is using the profile id
+// By profile id
 // const show = async (req, res, next) => {
 //     try {
 //         const { id } = req.params;
-//         const profile = await Profile.findById(id);
+//         const profile = await Profile.findById(id)
+//         .populate('userId');
 //         return res.send(profile);
 //     } catch(err) {
 //         console.log(err);
@@ -56,12 +55,12 @@ const index = async (req, res, next) => {
 // }
 
 // GET /profiles/:id
-// this is using the userId
+// By userId
 const show = async (req, res, next) => {
     try {
         const userId = req.params.id;
         const profile = await Profile.find({ userId: userId })
-        .populate('userId')
+        .populate('userId');
         return res.send(profile);
     } catch(err) {
         console.log(err);
@@ -71,10 +70,25 @@ const show = async (req, res, next) => {
 
 
 // PUT /profiles/:id
+// By profile id
+// const update = async (req, res, next) => {
+//     try {
+//         const { id } = req.params;
+//         const updatedProfile = await Profile.findByIdAndUpdate(id, req.body);
+//         return res.send(updatedProfile);
+//     } catch(err) {
+//         console.log(err);
+//         return res.status(500).send('an error occurred');
+//     }
+// }
+
+// PUT /profiles/:id
+// By userId
 const update = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const updatedProfile = await Profile.findByIdAndUpdate(id, req.body);
+        const userId = req.params.id;
+        console.log(req.body);
+        const updatedProfile = await Profile.findOneAndUpdate({ userId: userId }, req.body);
         return res.send(updatedProfile);
     } catch(err) {
         console.log(err);
@@ -83,17 +97,30 @@ const update = async (req, res, next) => {
 }
 
 // DELETE /profiles/:id
+// By profile id
+// const destroy = async (req, res, next) => {
+//     try {
+//         const { id } = req.params;
+//         const deletedProfile = await Profile.findByIdAndDelete(id);
+//         return res.send(deletedProfile);
+//     } catch(err) {
+//         console.log(err);
+//         res.status(500).send('an error occurred');
+//     }
+// }
+
+// DELETE /profiles/:id
+// By userId
 const destroy = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const deletedProfile = await Profile.findByIdAndDelete(id);
-        res.send(deletedProfile);
+        const userId = req.params.id;
+        const deletedProfile = await Profile.findOneAndDelete(userId);
+        return res.send(deletedProfile);
     } catch(err) {
         console.log(err);
         res.status(500).send('an error occurred');
     }
 }
-
 
 //Desc:     Route for user to upload important documents to s3
 //Route :   /profiles/:id/uploadDocument
