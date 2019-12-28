@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer')
-const { index, show, update, destroy, uploadDocument, uploadProfileImage } = require('../controllers/profiles-controller');
+const { create, index, show, update, destroy, uploadDocument, uploadProfileImage } = require('../controllers/profiles-controller');
 // const { checkAuth } = require('../middleware/auth-middleware');
 
 //Multer Settings
@@ -13,6 +13,7 @@ const fields = [
 
 
 //routes
+router.post('/', create);
 router.get('/', index);
 router.get('/:id', show);
 router.put('/:id', update);

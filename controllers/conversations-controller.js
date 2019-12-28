@@ -1,5 +1,4 @@
 // Dependencies
-const express = require('express');
 
 // Import Conversation model
 const Conversation = require('../models/Conversation');

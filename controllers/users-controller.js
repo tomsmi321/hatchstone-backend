@@ -1,5 +1,3 @@
-const express = require('express');
-const router = express.Router();
 const User = require('../models/User');
 
 
@@ -54,7 +52,6 @@ const destroy = async (req, res, next) => {
 }
 
 module.exports = {
-    // create,
     index,
     show,
     update,

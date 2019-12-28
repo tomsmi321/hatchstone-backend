@@ -1,10 +1,10 @@
 // Dependencies
-const express = require('express');
-const router = express.Router();
 const AWS = require('aws-sdk')
+const mongoose = require('mongoose');
 
-// Import Profile Model
+// Import Profile and User Models
 const Profile = require('../models/Profile');
+const User = require('../models/User');
 
 // AWS Credentials
 let s3credentials = new AWS.S3({
@@ -12,11 +12,30 @@ let s3credentials = new AWS.S3({
     secretAccessKey: process.env.SECRETACCESSKEY
 });
 
+// POST /profiles
+const create = async (req, res, next) => {
+    try {
+        // make sure user does not already have a profile
+        const { userId } = req.body;
+        const existingUserProfile = await Profile.findOne({ userId: userId });
+        if(existingUserProfile) {
+            throw 'user profile already exists';
+        }
+        const newProfile = await Profile.create(req.body);
+        res.send(newProfile);
+    } catch(err) {
+        console.log(err);
+        return res.status(404).send('an error occurred');
+    }
+}
+
+
 // GET /profiles
 const index = async (req, res, next) => {
     try {
-        const profiles = await Profile.find();
-        return  res.send(profiles);
+        const profiles = await Profile.find()
+        .populate('userId');
+        res.send(profiles);
     } catch(err) {
         console.log(err);
         return res.status(404).send('an error occurred');
@@ -24,16 +43,32 @@ const index = async (req, res, next) => {
 }
 
 // GET /profiles/:id
+// this is using the profile id
+// const show = async (req, res, next) => {
+//     try {
+//         const { id } = req.params;
+//         const profile = await Profile.findById(id);
+//         return res.send(profile);
+//     } catch(err) {
+//         console.log(err);
+//         return res.status(500).send('an error occurred');
+//     }
+// }
+
+// GET /profiles/:id
+// this is using the userId
 const show = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const profile = await Profile.findById(id);
+        const userId = req.params.id;
+        const profile = await Profile.find({ userId: userId })
+        .populate('userId')
         return res.send(profile);
     } catch(err) {
         console.log(err);
         return res.status(500).send('an error occurred');
     }
 }
+
 
 // PUT /profiles/:id
 const update = async (req, res, next) => {
@@ -152,6 +187,7 @@ const uploadProfileImage = async (req,res,next) => {
 }
 
 module.exports = {
+    create,
     index, 
     show,
     update,
