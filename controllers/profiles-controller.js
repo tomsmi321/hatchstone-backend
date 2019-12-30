@@ -11,9 +11,10 @@ let s3credentials = new AWS.S3({
 });
 
 // POST /profiles
+// create a new profile
 const create = async (req, res, next) => {
     try {
-        // make sure user does not already have a profile
+        // ensure user does not already have a profile
         const { userId } = req.body;
         const existingUserProfile = await Profile.findOne({ userId: userId });
         if(existingUserProfile) {
@@ -29,6 +30,7 @@ const create = async (req, res, next) => {
 
 
 // GET /profiles
+// return all profiles
 const index = async (req, res, next) => {
     try {
         const profiles = await Profile.find()
@@ -41,22 +43,22 @@ const index = async (req, res, next) => {
 }
 
 // GET /profiles/:id
-// By profile id
-// const show = async (req, res, next) => {
-//     try {
-//         const { id } = req.params;
-//         const profile = await Profile.findById(id)
-//         .populate('userId');
-//         return res.send(profile);
-//     } catch(err) {
-//         console.log(err);
-//         return res.status(500).send('an error occurred');
-//     }
-// }
-
-// GET /profiles/:id
-// By userId
+// return profile by profile id
 const show = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const profile = await Profile.findById(id)
+        .populate('userId');
+        return res.send(profile);
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send('an error occurred');
+    }
+}
+
+// GET /profiles/findByUser/:id
+// return profile by user id
+const findByUser = async (req, res, next) => {
     try {
         const userId = req.params.id;
         const profile = await Profile.find({ userId: userId })
@@ -68,26 +70,11 @@ const show = async (req, res, next) => {
     }
 }
 
-
-// PUT /profiles/:id
-// By profile id
-// const update = async (req, res, next) => {
-//     try {
-//         const { id } = req.params;
-//         const updatedProfile = await Profile.findByIdAndUpdate(id, req.body);
-//         return res.send(updatedProfile);
-//     } catch(err) {
-//         console.log(err);
-//         return res.status(500).send('an error occurred');
-//     }
-// }
-
-// PUT /profiles/:id
-// By userId
-const update = async (req, res, next) => {
+// PUT /profiles/updateByUser/:id
+// update profile by user id
+const updateByUser = async (req, res, next) => {
     try {
         const userId = req.params.id;
-        console.log(req.body);
         const updatedProfile = await Profile.findOneAndUpdate({ userId: userId }, req.body);
         return res.send(updatedProfile);
     } catch(err) {
@@ -96,22 +83,35 @@ const update = async (req, res, next) => {
     }
 }
 
-// DELETE /profiles/:id
-// By profile id
-// const destroy = async (req, res, next) => {
-//     try {
-//         const { id } = req.params;
-//         const deletedProfile = await Profile.findByIdAndDelete(id);
-//         return res.send(deletedProfile);
-//     } catch(err) {
-//         console.log(err);
-//         res.status(500).send('an error occurred');
-//     }
-// }
+// PUT /profiles/:id
+// update profile by profile id
+const update = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const updatedProfile = await Profile.findByIdAndUpdate(id, req.body);
+        return res.send(updatedProfile);
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send('an error occurred');
+    }
+}
 
 // DELETE /profiles/:id
-// By userId
+// delete profile by profile id
 const destroy = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const deletedProfile = await Profile.findByIdAndDelete(id);
+        return res.send(deletedProfile);
+    } catch(err) {
+        console.log(err);
+        res.status(500).send('an error occurred');
+    }
+}
+
+// DELETE /profiles/destroyByUser/:id
+// delete profile by user id
+const destroyByUser = async (req, res, next) => {
     try {
         const userId = req.params.id;
         const deletedProfile = await Profile.findOneAndDelete(userId);
@@ -217,8 +217,11 @@ module.exports = {
     create,
     index, 
     show,
+    findByUser,
     update,
+    updateByUser,
     destroy,
+    destroyByUser,
     uploadDocument,
     uploadProfileImage
     

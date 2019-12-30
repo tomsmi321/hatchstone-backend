@@ -4,22 +4,19 @@
 const Conversation = require('../models/Conversation');
 const User = require('../models/User');
 
-
 // POST /conversations
+// create a new conversation
 const create = async (req, res, next) => {
     try {
-        // search all existing conversations to check if a regular user already
-        // has a conversation running with that particular admin user, if so return that conversation
         const { clientUser, adminUser } = req.body;
         // check to make sure conversation is between an admin and a client
         const clientUserObj = await User.findById(clientUser);
-        console.log(clientUserObj.admin);
         const adminUserObj = await User.findById(adminUser);
-        console.log(adminUserObj.admin);
-        // console.log(!(clientUser.admin === false && adminUser.admin === true));
         if(!(clientUserObj.admin === false && adminUserObj.admin === true)) {
             throw 'conversation must be between an admin and a client'
         }
+        // search all existing conversations to check if a regular user already has a
+        // conversation active with that particular admin user, if so return that conversation
         const allConversations = await Conversation.find();
         allConversations.forEach((conversation) => {
             const convoParticipants = conversation.participants;
@@ -40,6 +37,7 @@ const create = async (req, res, next) => {
 }
 
 // GET /conversations
+// return all conversations
 const index = async (req, res, next) => {
     try {
         const conversations = await Conversation.find()
@@ -55,22 +53,25 @@ const index = async (req, res, next) => {
 }
 
 // GET /conversations/:id
-// By conversation id: returns a conversation by conversation id
-// const show = async (req, res, next) => {
-//     try {
-//         const { id } = req.params;
-//         const conversation = await Conversation.findById(id)
-//         // .populate('userId');
-//         return res.send(conversation);
-//     } catch(err) {
-//         console.log(err);
-//         return res.status(500).send('an error occurred');
-//     }
-// }
-
-// GET /conversation/:id
-// By userId: returns all of a given user's conversations
+// return a conversation by conversation id
 const show = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const conversation = await Conversation.findById(id)
+        .populate({
+            path: 'participants',
+            model: 'User'
+        })
+        return res.send(conversation);
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send('an error occurred');
+    }
+}
+
+// GET /conversations/findByUser/:id
+// return all conversations for a given user id
+const findByUser = async (req, res, next) => {
     try {
         const userId = req.params.id;
         const allConversations = await Conversation.find()
@@ -88,7 +89,7 @@ const show = async (req, res, next) => {
 }
 
 // PUT /conversations/:id
-// By conversation id: updates a conversation by conversation id
+// update a conversation by conversation id
 const update = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -106,7 +107,7 @@ const update = async (req, res, next) => {
 }
 
 // DELETE /conversations/:id
-// By conversation id: deletes a conversation by conversation id
+// delete a conversation by conversation id
 const destroy = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -124,5 +125,6 @@ module.exports = {
     index,
     show,
     update,
+    findByUser,
     destroy
 }
