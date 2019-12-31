@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer')
 const { create, index, show, findByUser, update, updateByUser, destroy, destroyByUser, uploadDocument, uploadProfileImage } = require('../controllers/profiles-controller');
 // const { checkAuth } = require('../middleware/auth-middleware');
+const { validateProfile } = require('../middleware/validation-middleware/profile-validation'); 
 
 //Multer Settings
 const storage = multer.memoryStorage();
@@ -11,14 +12,13 @@ const fields = [
   {name: 'file'}
 ]
 
-
 //routes
-router.post('/', create);
+router.post('/', validateProfile, create);
 router.get('/', index);
 router.get('/:id', show);
 router.get('/findByUser/:id', findByUser);
-router.put('/:id', update);
-router.put('/updateByUser/:id', updateByUser);
+router.put('/:id', validateProfile, update);
+router.put('/updateByUser/:id', validateProfile, updateByUser);
 router.delete('/:id', destroy);
 router.delete('/destroyByUser/:id', destroyByUser);
 
