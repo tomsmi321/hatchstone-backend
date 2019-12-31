@@ -34,6 +34,10 @@ const profileSchema = new Schema({
         type: Boolean,
         default: false
     },
+    investorType: {
+        type: String,
+        enum: ['individual', 'individualTrustee', 'company', 'corporateTrustee']
+    },
     dateStarted: {
         type: Date,
         default: Date.now
