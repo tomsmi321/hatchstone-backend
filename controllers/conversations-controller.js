@@ -18,18 +18,22 @@ const create = async (req, res, next) => {
         // search all existing conversations to check if a regular user already has a
         // conversation active with that particular admin user, if so return that conversation
         const allConversations = await Conversation.find();
+        let existingConversation = null;
         allConversations.forEach((conversation) => {
             const convoParticipants = conversation.participants;
             if(convoParticipants.includes(adminUser) && convoParticipants.includes(clientUser)) {
                 console.log('conversation already exists');
-                return res.send(conversation);
+                existingConversation = conversation;
+                return res.send(existingConversation);
             }
         })
         // otherwise create a new conversation
-        const newConversation = await Conversation.create({
-            participants: [clientUser, adminUser]
-        });
-        return res.send(newConversation);
+        if(!existingConversation) {
+            const newConversation = await Conversation.create({
+                participants: [clientUser, adminUser]
+            });
+            return res.send(newConversation);
+        }
     } catch(err) {
         console.log(err);
         return res.status(404).send('an error occurred');
