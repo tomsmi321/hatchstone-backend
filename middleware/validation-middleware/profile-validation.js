@@ -7,25 +7,25 @@ const profileValidationSchema = Joi.object().keys({
                   .max(30)
                   .required(),
     lastName: Joi.string()
-                 .max(30)
-                 .required(),
+                  .max(30)
+                  .required(),
     phone: Joi.string()
-              .pattern(new RegExp('^[0-9]+$'))
-              .min(8).max(30)
-              .required(),
+                  .pattern(new RegExp('^[0-9]+$'))
+                  .min(8).max(30)
+                  .required(),
     userId: Joi.string()
-               .alphanum()
-               .max(100)
-               .required(),
+                  .alphanum()
+                  .max(100)
+                  .required(),
     address: Joi.string()
-                .max(100)
-                .required(),
+                  .max(100)
+                  .required(),
     appProgress: Joi.number()
-                    .max(100),
+                  .max(100),
     approved: Joi.boolean(),
     investorType: Joi.any()
-                     .valid('individual', 'individual trustee', 'company', 'corporate trustee')
-                     .required(),
+                  .valid('individual', 'individual trustee', 'company', 'corporate trustee')
+                  .required(),
     dateStarted: Joi.date(),
     profileImage: Joi.string(),
     documents: Joi.string()
@@ -43,7 +43,6 @@ const validateProfile = async (req, res, next) => {
     } catch(err) {
         res.status(500).send(`${err}`);
     }
-   
 }
 
 module.exports = {

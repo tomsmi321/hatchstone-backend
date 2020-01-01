@@ -7,9 +7,9 @@ const userValidationSchema = Joi.object().keys({
               .email()
               .required(),
     password: Joi.string()
-                 .min(6)
-                 .max(30)
-                 .required(),
+              .min(6)
+              .max(30)
+              .required(),
     admin: Joi.boolean(),
     isActive: Joi.boolean()
   })
