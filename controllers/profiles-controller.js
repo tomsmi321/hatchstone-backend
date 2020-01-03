@@ -4,6 +4,12 @@ const AWS = require('aws-sdk')
 // Import Profile and User Models
 const Profile = require('../models/Profile');
 
+// Import investorType models
+const Individual = require('../models/investorTypes/Individual')
+const Company = require('../models/investorTypes/Company')
+const IndividualTrustee = require('../models/investorTypes/IndividualTrustee')
+const CorporateTrustee = require('../models/investorTypes/CorporateTrustee')
+
 // AWS Credentials
 let s3credentials = new AWS.S3({
     accessKeyId: process.env.ACCESSKEYID,
@@ -150,13 +156,57 @@ const uploadDocument = async (req,res,next) => {
                 res.send('Upload to S3 failed')
             } else {
                 const url = data.Location
-                const profile =  Profile.findByIdAndUpdate(id,{ $push: { documents: url }})
-                .then(profile => {
-                    console.log(profile);
-                })
+                const profile = Profile.findById(id)
+                const investorTypeString = profile.investorType.toLowerCase()
+                // using the value from the investorType field to filter and retrieve the respective investorType model instance
+                if (investorTypeString === 'individual') {
+                  const investorTypeModel = Individual.findOne({profileId: id}, function(err,obj) { console.log(obj) })
+                  if (file.name === 'investorIdentification') {
+                    investorTypeModel.investorIdentification = url
+                  } else if (file.name === 'section708WholesaleInvestorCertification'){
+                    investorTypeModel.section708WholesaleInvestorCertification = url
+                  } else {
+                    console.log('an error has occured matching the file name to the respective investorType field')
+                  }
+                } else if (investorTypeString === 'individualTrustee') {
+                  const investorTypeModel = IndividualTrustee.findOne({profileId: id}, function(err,obj) { console.log(obj) })
+                  if (file.name === 'investorIdentification') {
+                    investorTypeModel.investorIdentification = url
+                  } else if (file.name === 'section708WholesaleInvestorCertification'){
+                    investorTypeModel.section708WholesaleInvestorCertification = url
+                  } else if (file.name === 'TrustSelfManagedSuperannuationFundVerification'){
+                    investorTypeModel.TrustSelfManagedSuperannuationFundVerification = url
+                  } else {
+                    console.log('an error has occured matching the file name to the respective investorType field')
+                  }
+                } else if (investorTypeString === 'company') {
+                  const investorTypeModel = Company.findOne({profileId: id}, function(err,obj) { console.log(obj) })
+                  if (file.name === 'companyVerification') {
+                    investorTypeModel.companyVerification = url
+                  } else if (file.name === 'section708WholesaleInvestorCertification'){
+                    investorTypeModel.section708WholesaleInvestorCertification = url
+                  } else if (file.name === 'DirectorAndBeneficialOwnerIdentification'){
+                    investorTypeModel.DirectorAndBeneficialOwnerIdentification = url
+                  } else {
+                    console.log('an error has occured matching the file name to the respective investorType field')
+                  }
+                } else {
+                  const investorTypeModel = CorporateTrustee.findOne({profileId: id}, function(err,obj) { console.log(obj) })
+                  if (file.name === 'companyVerification') {
+                    investorTypeModel.companyVerification = url
+                  } else if (file.name === 'section708WholesaleInvestorCertification'){
+                    investorTypeModel.section708WholesaleInvestorCertification = url
+                  }
+                  else if (file.name === 'TrustSelfManagedSuperannuationFundVerification'){
+                    investorTypeModel.TrustSelfManagedSuperannuationFundVerification = url
+                  } else {
+                    console.log('an error has occured matching the file name to the respective investorType field')
+                  }
+                }
             }
         })
         //send back profile
+        console.log(investorTypeModel)
         const profile = await Profile.findById(id)
         return res.send(profile)
     } catch (err) {

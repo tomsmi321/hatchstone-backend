@@ -36,7 +36,7 @@ const profileSchema = new Schema({
     },
     investorType: {
         type: String,
-        enum: ['individual', 'individual trustee', 'company', 'corporate trustee']
+        enum: ['individual', 'individualTrustee', 'company', 'corporateTrustee']
     },
     dateStarted: {
         type: Date,
@@ -44,9 +44,6 @@ const profileSchema = new Schema({
     },
     profileImage: {
         type: String
-    },
-    documents: {
-        type: [String]
     }
 })
 
