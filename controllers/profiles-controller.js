@@ -251,7 +251,6 @@ const profilesOnboarding = async (req, res, next) => {
 
 
 
-
 module.exports = {
     create,
     index, 
