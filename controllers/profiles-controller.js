@@ -287,9 +287,10 @@ const profilesOnboarding = async (req, res, next) => {
     try {
         const onboardingProfiles = await Profile.find({approved: false})
             .populate('userId');
-        const onboardingProfilesClients = onboardingProfiles.map((onboardingProfile) => {
-            if(!onboardingProfile.userId.admin){
-                return onboardingProfile
+        const onboardingProfilesClients = [];
+        onboardingProfiles.forEach((onboardingProfile) => {
+            if(onboardingProfile.userId.admin === false) {
+                onboardingProfilesClients.push(onboardingProfile);
             }
         })
         res.send(onboardingProfilesClients);
