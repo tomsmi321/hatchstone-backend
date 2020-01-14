@@ -29,7 +29,10 @@ const loginUser = async (req, res, user, password) => {
         if(validPassword) {
             const token = generateJwt(user);
             console.log(req.user);
-            return res.send({token});
+            return res.send({
+              user,
+              token
+            });
         } else {
             res.status(403).send('incorrect details');
         }

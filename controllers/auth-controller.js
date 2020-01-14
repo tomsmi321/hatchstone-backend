@@ -15,7 +15,10 @@ const register = async (req, res) => {
                     password: password
                 })
                 const token = await generateJwt(newUser);
-                return res.send({token});
+                return res.send({
+                  token,
+                  user: newUser
+                });
             } else {
                 return res.status(403).send('user already exists')
             }
