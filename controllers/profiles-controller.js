@@ -213,6 +213,45 @@ const uploadProfileImage = async (req,res,next) => {
     }
 }
 
+// GET /profilesApproved
+// returns an array of approved client profiles
+const profilesApproved = async (req, res, next) => {
+    try {
+        const approvedProfiles = await Profile.find({approved: true})
+            .populate('userId');
+        const approvedProfilesClients = approvedProfiles.map((approvedProfile) => {
+            if(!approvedProfile.userId.admin){
+                return approvedProfile
+            }
+        })
+        res.send(approvedProfilesClients);
+    } catch(err) {
+        console.log(err);
+        return res.status(404).send('an error occurred');
+    }
+}
+
+// GET /profilesOnboarding
+// returns an array of onboarding client profiles (where approved attribute on profile is false)
+const profilesOnboarding = async (req, res, next) => {
+    try {
+        const onboardingProfiles = await Profile.find({approved: false})
+            .populate('userId');
+        const onboardingProfilesClients = onboardingProfiles.map((onboardingProfile) => {
+            if(!onboardingProfile.userId.admin){
+                return onboardingProfile
+            }
+        })
+        res.send(onboardingProfilesClients);
+    } catch(err) {
+        console.log(err);
+        return res.status(404).send('an error occurred');
+    }
+}
+
+
+
+
 module.exports = {
     create,
     index, 
@@ -223,6 +262,7 @@ module.exports = {
     destroy,
     destroyByUser,
     uploadDocument,
-    uploadProfileImage
-    
+    uploadProfileImage,
+    profilesApproved,
+    profilesOnboarding
 }

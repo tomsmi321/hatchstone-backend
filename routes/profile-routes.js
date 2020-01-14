@@ -1,7 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer')
-const { create, index, show, findByUser, update, updateByUser, destroy, destroyByUser, uploadDocument, uploadProfileImage } = require('../controllers/profiles-controller');
+const { create, 
+        index, 
+        show, 
+        findByUser, 
+        update, 
+        updateByUser, 
+        destroy, 
+        destroyByUser, 
+        uploadDocument, 
+        uploadProfileImage,
+        profilesApproved,
+        profilesOnboarding } = require('../controllers/profiles-controller');
 // const { checkAuth } = require('../middleware/auth-middleware');
 
 //Multer Settings
@@ -15,6 +26,8 @@ const fields = [
 //routes
 router.post('/', create);
 router.get('/', index);
+router.get('/profileApproved', profilesApproved);
+router.get('/profilesOnboarding', profilesOnboarding);
 router.get('/:id', show);
 router.get('/findByUser/:id', findByUser);
 router.put('/:id', update);
