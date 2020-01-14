@@ -26,7 +26,7 @@ const fields = [
 //routes
 router.post('/', validateProfile, create);
 router.get('/', index);
-router.get('/profileApproved', profilesApproved);
+router.get('/profilesApproved', profilesApproved);
 router.get('/profilesOnboarding', profilesOnboarding);
 router.get('/:id', show);
 router.get('/findByUser/:id', findByUser);
