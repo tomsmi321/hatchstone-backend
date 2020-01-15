@@ -101,9 +101,9 @@ const seedDb = async () => {
         dateStarted: Date.now(),
         profileImage: 'https://floridatax.com/wp-content/uploads/2015/03/LawFirmProfile6c-200x200.jpg',
         documents: [
-            'Company verification, company_verification.doc',
-            'Owner identification, id.png',
-            'Wholesale investor certification, certification.doc'
+            // 'Company verification, company_verification.doc',
+            // 'Owner identification, id.png',
+            // 'Wholesale investor certification, certification.doc'
         ]
     });
 
