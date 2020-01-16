@@ -14,17 +14,17 @@ const getValidProfileAttributes = (req) => {
             documents } = req.body;
 
     const definedAttributes = {}
-    if(firstName || firstName === '') {definedAttributes.firstName = firstName};
-    if(lastName || lastName === '') {definedAttributes.lastName = lastName};
-    if(phone || phone === '') {definedAttributes.phone = phone};
-    if(userId || userId === '') {definedAttributes.userId = userId};
-    if(address || address === '') {definedAttributes.address = address};
+    if(firstName) {definedAttributes.firstName = firstName};
+    if(lastName) {definedAttributes.lastName = lastName};
+    if(phone) {definedAttributes.phone = phone};
+    if(userId) {definedAttributes.userId = userId};
+    if(address) {definedAttributes.address = address};
     if(approved === true || approved === false) {definedAttributes.approved = approved};
-    if(investorType || investorType === '') {definedAttributes.investorType = investorType};
+    if(investorType) {definedAttributes.investorType = investorType};
     if(dateStarted) {definedAttributes.dateStarted = dateStarted};
-    if(profileImage || profileImage === '') {definedAttributes.profileImage = profileImage};
+    if(profileImage) {definedAttributes.profileImage = profileImage};
     if(documents) {definedAttributes.documents = documents};
-    
+
     return definedAttributes;
 }
 
