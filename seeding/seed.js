@@ -97,10 +97,14 @@ const seedDb = async () => {
         address: '35 wells road, Oakleigh, vic, 3166',
         appProgress: 20,
         approved: false,
-        investorType: 'individual',
+        investorType: 'company',
         dateStarted: Date.now(),
-        profileImage: '',
-        documents: []
+        profileImage: 'https://floridatax.com/wp-content/uploads/2015/03/LawFirmProfile6c-200x200.jpg',
+        documents: [
+            'Company verification, company_verification.doc',
+            'Owner identification, id.png',
+            'Wholesale investor certification, certification.doc'
+        ]
     });
 
     const profile4 = await Profile.create({

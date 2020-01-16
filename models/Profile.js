@@ -44,6 +44,9 @@ const profileSchema = new Schema({
     },
     profileImage: {
         type: String
+    },
+    documents: {
+        type: [String]
     }
 })
 

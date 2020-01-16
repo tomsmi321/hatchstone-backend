@@ -31,7 +31,7 @@ router.get('/profilesOnboarding', profilesOnboarding);
 router.get('/:id', show);
 router.get('/findByUser/:id', findByUser);
 router.put('/:id', validateProfile, update);
-router.put('/updateByUser/:id', validateProfile, updateByUser);
+router.put('/updateByUser/:id', updateByUser);
 router.delete('/:id', destroy);
 router.delete('/destroyByUser/:id', destroyByUser);
 
