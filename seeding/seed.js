@@ -67,12 +67,12 @@ const seedDb = async () => {
         phone: '0476233988',
         userId: user1._id,
         address: '75 park road, park orchards, vic, 3114',
-        appProgress: 100,
+        // appProgress: 100,
         approved: true,
         investorType: 'individual',
         dateStarted: Date.now(),
         profileImage: '',
-        documents: []
+        documents: [1, 2]
     });
 
     const profile2 = await Profile.create({
@@ -95,7 +95,7 @@ const seedDb = async () => {
         phone: '0432009765',
         userId: user3._id,
         address: '35 wells road, Oakleigh, vic, 3166',
-        appProgress: 20,
+        // appProgress: 20,
         approved: false,
         investorType: 'company',
         dateStarted: Date.now(),

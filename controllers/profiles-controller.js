@@ -10,6 +10,9 @@ const Company = require('../models/investorTypes/Company')
 const IndividualTrustee = require('../models/investorTypes/IndividualTrustee')
 const CorporateTrustee = require('../models/investorTypes/CorporateTrustee')
 
+// Import utils
+const { getValidProfileAttributes } = require('../utils/profile-utils')
+
 // AWS Credentials
 let s3credentials = new AWS.S3({
     accessKeyId: process.env.ACCESSKEYID,
@@ -76,13 +79,23 @@ const findByUser = async (req, res, next) => {
     }
 }
 
+
 // PUT /profiles/updateByUser/:id
 // update profile by user id
+// findOne and .save() is used here rather than findOneAndUpdate because we need to trigger the
+// pre save hook to trigger the appProgress update 
 const updateByUser = async (req, res, next) => {
     try {
-        const userId = req.params.id;
-        const updatedProfile = await Profile.findOneAndUpdate({ userId: userId }, req.body);
-        return res.send(updatedProfile);
+        console.log('in update by user');
+        const id = req.params.id;
+        const definedAttributes = getValidProfileAttributes(req);
+        // console.log(definedAttributes);
+        const profile = await Profile.findOne({ userId: id });
+        for(let attribute in definedAttributes) {
+            profile[attribute] = definedAttributes[attribute];
+        }
+        await profile.save();
+        return res.send(profile);
     } catch(err) {
         console.log(err);
         return res.status(500).send('an error occurred');
@@ -91,6 +104,7 @@ const updateByUser = async (req, res, next) => {
 
 // PUT /profiles/:id
 // update profile by profile id
+// THIS WONT CURRENTLY WORK FOR UPDATING THE APP PROGRESS STATUS, USE UPDATE BY USERID INSTEAD
 const update = async (req, res, next) => {
     try {
         const { id } = req.params;
