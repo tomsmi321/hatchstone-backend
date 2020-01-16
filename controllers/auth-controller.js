@@ -34,9 +34,11 @@ const register = async (req, res) => {
 // /POST login 
 const login = async (req, res) => {
     const { email, password } = req.body;
+    console.log(email,password)
     if(email && password) {
         try {
             const user = await User.findOne({email: email});
+            console.log(user)
             return await loginUser(req, res, user, password)
         } catch(err) {
             console.log(err);

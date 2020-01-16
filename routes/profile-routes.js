@@ -19,8 +19,9 @@ const { validateProfile } = require('../middleware/validation-middleware/profile
 //Multer Settings
 const storage = multer.memoryStorage();
 const fields = [
-  {name: 'name'},
-  {name: 'file'}
+  {document: 'documentType'},
+  {name: 'file'},
+  {name: 'profileId'}
 ]
 
 //routes

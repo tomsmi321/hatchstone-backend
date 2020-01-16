@@ -24,6 +24,7 @@ const generateJwt = (user) => {
 }
 
 const loginUser = async (req, res, user, password) => {
+    
     if(user) {
         const validPassword = await checkPassword(password, user.password);
         if(validPassword) {
@@ -34,6 +35,7 @@ const loginUser = async (req, res, user, password) => {
               token
             });
         } else {
+            console.log("not a valid password")
             res.status(403).send('incorrect details');
         }
     } else {
