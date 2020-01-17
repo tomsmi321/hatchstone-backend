@@ -42,7 +42,7 @@ const profileSchema = new Schema({
         type: String
     },
     documents: {
-        type: [String]
+        type : Array , "default" : [] 
     },
     appProgress: {
         type: Number,

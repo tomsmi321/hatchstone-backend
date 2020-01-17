@@ -1,18 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer')
-const { create, 
-        index, 
-        show, 
-        findByUser, 
-        update, 
-        updateByUser, 
-        destroy, 
-        destroyByUser, 
-        uploadDocument, 
-        uploadProfileImage,
-        profilesApproved,
-        profilesOnboarding } = require('../controllers/profiles-controller');
+const { 
+  create, 
+    index, 
+    show, 
+    findByUser, 
+    update, 
+    updateByUser, 
+    destroy, 
+    destroyByUser, 
+    uploadDocument, 
+    uploadProfileImage,
+    profilesApproved,
+    profilesOnboarding,
+    getDocument,
+    deleteDocument,
+    downloadDocument       
+  } = require('../controllers/profiles-controller');
 // const { checkAuth } = require('../middleware/auth-middleware');
 const { validateProfile } = require('../middleware/validation-middleware/profile-validation'); 
 
@@ -36,9 +41,16 @@ router.put('/updateByUser/:id', updateByUser);
 router.delete('/:id', destroy);
 router.delete('/destroyByUser/:id', destroyByUser);
 
-// .multe will be used in all subsequent requests so put this at the bottom
-// router.use(multer({ storage: storage }).fields(fields))
+
+//image routes
 router.post('/:id/uploadDocument', multer({storage: storage}).fields(fields), uploadDocument)
 router.post('/:id/uploadProfileImage', multer({storage: storage}).fields(fields), uploadProfileImage)
+
+router.post('/:id/downloadDocument/:fileName',downloadDocument)
+
+router.get('/:id/getDocument', getDocument)
+
+// router.delete('/:id/deleteDocument', deleteDocument)
+// router.delete('/:id/deleteProfileImage',deleteProfileImage)
 
 module.exports = router;
