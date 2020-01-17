@@ -1,8 +1,9 @@
 // Dependencies
 const AWS = require('aws-sdk')
-const fs = require('fs')
+
 // Import Profile and User Models
 const Profile = require('../models/Profile');
+
 
 // Import investorType models
 const Individual = require('../models/investorTypes/Individual')
@@ -166,7 +167,7 @@ const uploadDocument = async (req, res, next) => {
     try {
         //get document from req and convert to lowercase
         let documentString = req.body.document
-       
+
         //get profile id from params
         const {
             id
@@ -203,7 +204,7 @@ const uploadDocument = async (req, res, next) => {
                     url: url,
                     fileName: fileName
                 }
-               
+
                 const profile = Profile.findByIdAndUpdate(id, {
                         $push: {
                             documents: document
@@ -290,40 +291,6 @@ const getDocument = async (req, res, next) => {
 const deleteDocument = async (req, res, next) => {
 
 }
-
-const downloadDocument = async(req,res,next) => {
-    try {
-        console.log(req.body)
-        // console.log(req.headers)
-        const {uri, docType} = req.body
-        
-        const userId = req.params.id;
-        
-        const profile = await Profile.find({
-                userId: userId
-            })
-            console.log(req.params)
-           res.send(profile)
-    } catch (err) {
-        console.log(err);
-        return res.status(500).send('an error occurred');
-    }
-
-//     const download = function(uri, filename, callback){
-//         request.head(uri, function(err, res, body){
-//           console.log('content-type:', res.headers['content-type']);
-//           console.log('content-length:', res.headers['content-length']);
-      
-//           request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-//         });
-//       };
-      
-//       download('https://www.google.com/images/srpr/logo3w.png', 'google.png', function(){
-//         console.log('done');
-//       });
-
-}
-
 
 //  NOTE: This route should be spliced into the update profile route as it is a part of the edit profile form
 //  SUBNOTE: The following route will have to upload images to a different aws bucket than the documents. This will allow us to have different permissions set on the images;  documents should always be private, profile images can be public.
@@ -436,6 +403,5 @@ module.exports = {
     profilesApproved,
     profilesOnboarding,
     getDocument,
-    deleteDocument,
-    downloadDocument
+    deleteDocument
 }

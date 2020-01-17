@@ -15,8 +15,7 @@ const {
     profilesApproved,
     profilesOnboarding,
     getDocument,
-    deleteDocument,
-    downloadDocument       
+    deleteDocument,      
   } = require('../controllers/profiles-controller');
 // const { checkAuth } = require('../middleware/auth-middleware');
 const { validateProfile } = require('../middleware/validation-middleware/profile-validation'); 
@@ -46,7 +45,6 @@ router.delete('/destroyByUser/:id', destroyByUser);
 router.post('/:id/uploadDocument', multer({storage: storage}).fields(fields), uploadDocument)
 router.post('/:id/uploadProfileImage', multer({storage: storage}).fields(fields), uploadProfileImage)
 
-router.post('/:id/downloadDocument/:fileName',downloadDocument)
 
 router.get('/:id/getDocument', getDocument)
 
