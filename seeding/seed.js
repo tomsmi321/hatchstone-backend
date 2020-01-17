@@ -72,7 +72,7 @@ const seedDb = async () => {
         investorType: 'individual',
         dateStarted: Date.now(),
         profileImage: '',
-        documents: [1, 2]
+        documents: []
     });
 
     const profile2 = await Profile.create({
