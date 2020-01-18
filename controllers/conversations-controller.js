@@ -1,8 +1,9 @@
 // Dependencies
 
-// Import Conversation model
+// Import models
 const Conversation = require('../models/Conversation');
 const User = require('../models/User');
+const Profile = require('../models/Profile');
 
 // POST /conversations
 // create a new conversation
@@ -79,13 +80,52 @@ const findByUser = async (req, res, next) => {
     try {
         const userId = req.params.id;
         const allConversations = await Conversation.find()
+
         const userConversations = [];
         allConversations.forEach((conversation) => {
             if(conversation.participants.includes(userId)) {
                 userConversations.push(conversation);
             }
         })
-        return res.send(userConversations);
+
+        if(!userConversations.length) {
+            res.send('no conversations')
+        }
+
+        const getUserConversationsPopulated = async () => {
+            // .map() will return an array of promises
+            const userConversationsPopulated = userConversations.map(async (conversation) => {
+                // get the clients profile
+                const conversationPopulated = {
+                    participants: []
+                };
+
+                const clientUserId = conversation.participants[0]._id;
+                const clientProfile = await Profile.findOne({ userId: clientUserId })
+                    .populate({
+                        path: 'userId',
+                        model: 'User'
+                    });
+                
+                // get the admins profile
+                const adminUserId = conversation.participants[1]._id;
+                const adminProfile = await Profile.findOne({ userId: adminUserId })
+                    .populate({
+                        path: 'userId',
+                        model: 'User'
+                    });
+           
+                conversationPopulated.participants.push(clientProfile, adminProfile)
+                return conversationPopulated;
+            
+            })
+            // here we pass in the array of promises and wait till they are all resolved prior to returning
+            return Promise.all(userConversationsPopulated).then();
+        }
+
+        const userConversationsPopulated = await getUserConversationsPopulated();
+        res.send(userConversationsPopulated);
+       
     } catch(err) {
         console.log(err);
         return res.status(500).send('an error occurred');

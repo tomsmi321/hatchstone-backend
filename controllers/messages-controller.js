@@ -57,7 +57,7 @@ const findByAuth = async (req, res, next) => {
 }
 
 // GET /messages/findByConversation/:id
-// return all messages by a given author id
+// return all messages by a given conversationId id
 const findByConversation = async (req, res, next) => {
     try {
         const conversationId = req.params.id;
