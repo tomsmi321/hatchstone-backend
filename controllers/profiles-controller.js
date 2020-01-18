@@ -4,6 +4,7 @@ const AWS = require('aws-sdk')
 // Import Profile and User Models
 const Profile = require('../models/Profile');
 
+
 // Import investorType models
 const Individual = require('../models/investorTypes/Individual')
 const Company = require('../models/investorTypes/Company')
@@ -11,7 +12,9 @@ const IndividualTrustee = require('../models/investorTypes/IndividualTrustee')
 const CorporateTrustee = require('../models/investorTypes/CorporateTrustee')
 
 // Import utils
-const { getValidProfileAttributes } = require('../utils/profile-utils')
+const {
+    getValidProfileAttributes
+} = require('../utils/profile-utils')
 
 // AWS Credentials
 let s3credentials = new AWS.S3({
@@ -24,14 +27,18 @@ let s3credentials = new AWS.S3({
 const create = async (req, res, next) => {
     try {
         // ensure user does not already have a profile
-        const { userId } = req.body;
-        const existingUserProfile = await Profile.findOne({ userId: userId });
-        if(existingUserProfile) {
+        const {
+            userId
+        } = req.body;
+        const existingUserProfile = await Profile.findOne({
+            userId: userId
+        });
+        if (existingUserProfile) {
             throw 'user profile already exists';
         }
         const newProfile = await Profile.create(req.body);
         return res.send(newProfile);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(404).send('an error occurred');
     }
@@ -43,9 +50,9 @@ const create = async (req, res, next) => {
 const index = async (req, res, next) => {
     try {
         const profiles = await Profile.find()
-        .populate('userId');
+            .populate('userId');
         return res.send(profiles);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(404).send('an error occurred');
     }
@@ -55,11 +62,13 @@ const index = async (req, res, next) => {
 // return profile by profile id
 const show = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const {
+            id
+        } = req.params;
         const profile = await Profile.findById(id)
-        .populate('userId');
+            .populate('userId');
         return res.send(profile);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(500).send('an error occurred');
     }
@@ -70,10 +79,12 @@ const show = async (req, res, next) => {
 const findByUser = async (req, res, next) => {
     try {
         const userId = req.params.id;
-        const profile = await Profile.find({ userId: userId })
-        .populate('userId');
+        const profile = await Profile.find({
+                userId: userId
+            })
+            .populate('userId');
         return res.send(profile);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(500).send('an error occurred');
     }
@@ -90,14 +101,21 @@ const updateByUser = async (req, res, next) => {
         const id = req.params.id;
         const definedAttributes = getValidProfileAttributes(req);
         // console.log(definedAttributes);
+<<<<<<< HEAD
         const profile = await Profile.findOne({ userId: id });
         console.log(profile);
         for(let attribute in definedAttributes) {
+=======
+        const profile = await Profile.findOne({
+            userId: id
+        });
+        for (let attribute in definedAttributes) {
+>>>>>>> 8ef2949606250354a1b55e77f79a3a3a457a6439
             profile[attribute] = definedAttributes[attribute];
         }
         await profile.save();
         return res.send(profile);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(500).send('an error occurred');
     }
@@ -108,10 +126,12 @@ const updateByUser = async (req, res, next) => {
 // THIS WONT CURRENTLY WORK FOR UPDATING THE APP PROGRESS STATUS, USE UPDATE BY USERID INSTEAD
 const update = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const {
+            id
+        } = req.params;
         const updatedProfile = await Profile.findByIdAndUpdate(id, req.body);
         return res.send(updatedProfile);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(500).send('an error occurred');
     }
@@ -121,10 +141,12 @@ const update = async (req, res, next) => {
 // delete profile by profile id
 const destroy = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const {
+            id
+        } = req.params;
         const deletedProfile = await Profile.findByIdAndDelete(id);
         return res.send(deletedProfile);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         res.status(500).send('an error occurred');
     }
@@ -137,7 +159,7 @@ const destroyByUser = async (req, res, next) => {
         const userId = req.params.id;
         const deletedProfile = await Profile.findOneAndDelete(userId);
         return res.send(deletedProfile);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         res.status(500).send('an error occurred');
     }
@@ -147,20 +169,31 @@ const destroyByUser = async (req, res, next) => {
 //Route :   /profiles/:id/uploadDocument
 //Method:   POST
 //Access:   Private
-const uploadDocument = async (req,res,next) => {
+const uploadDocument = async (req, res, next) => {
     try {
-        //get Profile from params
-        const { id } = req.params
-         //get file from request
-        const { file } = req.files
-        const uniqueValue = id
+        //get document from req and convert to lowercase
+        let documentString = req.body.document
+
+        //get profile id from params
+        const {
+            id
+        } = req.params
+
+        //get file from request
+        const {
+            file
+        } = req.files
+
+        const fileName = file[0].originalname
         //convert to encrypted string
-        const name = Buffer.from(`${uniqueValue}${file[0].originalname}`).toString('base64')
+        // const name = Buffer.from(`${uniqueValue}${file[0].originalname}`).toString('base64')
+
         //s3 params
         let fileParams = {
             Bucket: process.env.BUCKET,
             Body: file[0].buffer,
-            Key: name,
+            //this is where we set the name of the url
+            Key: `${documentString}_${id}_${fileName}`,
             ACL: 'public-read',
             ContentType: file[0].mimetype
         }
@@ -171,63 +204,98 @@ const uploadDocument = async (req,res,next) => {
                 res.send('Upload to S3 failed')
             } else {
                 const url = data.Location
-                const profile = Profile.findById(id)
-                const investorTypeString = profile.investorType.toLowerCase()
-                // using the value from the investorType field to filter and retrieve the respective investorType model instance
-                if (investorTypeString === 'individual') {
-                  const investorTypeModel = Individual.findOne({profileId: id}, function(err,obj) { console.log(obj) })
-                  if (file.name === 'investorIdentification') {
-                    investorTypeModel.investorIdentification = url
-                  } else if (file.name === 'section708WholesaleInvestorCertification'){
-                    investorTypeModel.section708WholesaleInvestorCertification = url
-                  } else {
-                    console.log('an error has occured matching the file name to the respective investorType field')
-                  }
-                } else if (investorTypeString === 'individualTrustee') {
-                  const investorTypeModel = IndividualTrustee.findOne({profileId: id}, function(err,obj) { console.log(obj) })
-                  if (file.name === 'investorIdentification') {
-                    investorTypeModel.investorIdentification = url
-                  } else if (file.name === 'section708WholesaleInvestorCertification'){
-                    investorTypeModel.section708WholesaleInvestorCertification = url
-                  } else if (file.name === 'TrustSelfManagedSuperannuationFundVerification'){
-                    investorTypeModel.TrustSelfManagedSuperannuationFundVerification = url
-                  } else {
-                    console.log('an error has occured matching the file name to the respective investorType field')
-                  }
-                } else if (investorTypeString === 'company') {
-                  const investorTypeModel = Company.findOne({profileId: id}, function(err,obj) { console.log(obj) })
-                  if (file.name === 'companyVerification') {
-                    investorTypeModel.companyVerification = url
-                  } else if (file.name === 'section708WholesaleInvestorCertification'){
-                    investorTypeModel.section708WholesaleInvestorCertification = url
-                  } else if (file.name === 'DirectorAndBeneficialOwnerIdentification'){
-                    investorTypeModel.DirectorAndBeneficialOwnerIdentification = url
-                  } else {
-                    console.log('an error has occured matching the file name to the respective investorType field')
-                  }
-                } else {
-                  const investorTypeModel = CorporateTrustee.findOne({profileId: id}, function(err,obj) { console.log(obj) })
-                  if (file.name === 'companyVerification') {
-                    investorTypeModel.companyVerification = url
-                  } else if (file.name === 'section708WholesaleInvestorCertification'){
-                    investorTypeModel.section708WholesaleInvestorCertification = url
-                  }
-                  else if (file.name === 'TrustSelfManagedSuperannuationFundVerification'){
-                    investorTypeModel.TrustSelfManagedSuperannuationFundVerification = url
-                  } else {
-                    console.log('an error has occured matching the file name to the respective investorType field')
-                  }
+                //create document object to be pushed into array
+                const document = {
+                    name: documentString,
+                    url: url,
+                    fileName: fileName
                 }
+
+                const profile = Profile.findByIdAndUpdate(id, {
+                        $push: {
+                            documents: document
+                        }
+                    })
+                    .then(profile => {
+                        console.log(profile);
+                    })
             }
         })
         //send back profile
-        console.log(investorTypeModel)
         const profile = await Profile.findById(id)
+        console.log(profile)
         return res.send(profile)
     } catch (err) {
         console.log(err)
         res.status(500).send("Server Error")
     }
+    // const profile = Profile.findById(id)
+    // console.log(profile)
+    // const investorTypeString = profile.investorType.toLowerCase()
+    // // using the value from the investorType field to filter and retrieve the respective investorType model instance
+    // if (investorTypeString === 'individual') {
+    //   const investorTypeModel = Individual.findOne({profileId: id}, function(err,obj) { console.log(obj) })
+    //   if (file.name === 'investorIdentification') {
+    //     investorTypeModel.investorIdentification = url
+    //   } else if (file.name === 'section708WholesaleInvestorCertification'){
+    //     investorTypeModel.section708WholesaleInvestorCertification = url
+    //   } else {
+    //     console.log('an error has occured matching the file name to the respective investorType field')
+    //   }
+    // } else if (investorTypeString === 'individualTrustee') {
+    //   const investorTypeModel = IndividualTrustee.findOne({profileId: id}, function(err,obj) { console.log(obj) })
+    //   if (file.name === 'investorIdentification') {
+    //     investorTypeModel.investorIdentification = url
+    //   } else if (file.name === 'section708WholesaleInvestorCertification'){
+    //     investorTypeModel.section708WholesaleInvestorCertification = url
+    //   } else if (file.name === 'TrustSelfManagedSuperannuationFundVerification'){
+    //     investorTypeModel.TrustSelfManagedSuperannuationFundVerification = url
+    //   } else {
+    //     console.log('an error has occured matching the file name to the respective investorType field')
+    //   }
+    // } else if (investorTypeString === 'company') {
+    //   const investorTypeModel = Company.findOne({profileId: id}, function(err,obj) { console.log(obj) })
+    //   if (file.name === 'companyVerification') {
+    //     investorTypeModel.companyVerification = url
+    //   } else if (file.name === 'section708WholesaleInvestorCertification'){
+    //     investorTypeModel.section708WholesaleInvestorCertification = url
+    //   } else if (file.name === 'DirectorAndBeneficialOwnerIdentification'){
+    //     investorTypeModel.DirectorAndBeneficialOwnerIdentification = url
+    //   } else {
+    //     console.log('an error has occured matching the file name to the respective investorType field')
+    //   }
+    // } else {
+    //   const investorTypeModel = CorporateTrustee.findOne({profileId: id}, function(err,obj) { console.log(obj) })
+    //   if (file.name === 'companyVerification') {
+    //     investorTypeModel.companyVerification = url
+    //   } else if (file.name === 'section708WholesaleInvestorCertification'){
+    //     investorTypeModel.section708WholesaleInvestorCertification = url
+    //   }
+    //   else if (file.name === 'TrustSelfManagedSuperannuationFundVerification'){
+    //     investorTypeModel.TrustSelfManagedSuperannuationFundVerification = url
+    //   } else {
+    //     console.log('an error has occured matching the file name to the respective investorType field')
+    //   }
+    // }
+
+}
+
+//retrieve image from s3 
+
+const getDocument = async (req, res, next) => {
+    const {
+        document
+    } = req.body
+    const {
+        id
+    } = req.params
+    const profile = await Profile.findById(id)
+    console.log(profile)
+}
+
+//this route will be hit if the user wants to delete their uploaded image.
+const deleteDocument = async (req, res, next) => {
+
 }
 
 //  NOTE: This route should be spliced into the update profile route as it is a part of the edit profile form
@@ -237,16 +305,20 @@ const uploadDocument = async (req,res,next) => {
 //Route :   /profiles/:id/uploadProfileImage
 //Method:   POST
 //Access:   Private
-const uploadProfileImage = async (req,res,next) => {
+const uploadProfileImage = async (req, res, next) => {
     try {
         //get Profile from params
-        const { id } = req.params
-         //get file from request
-        const { file } = req.files
+        const {
+            id
+        } = req.params
+        //get file from request
+        const {
+            file
+        } = req.files
         const uniqueValue = id
         //convert to encrypted string
         const name = Buffer.from(`${uniqueValue}${file[0].originalname}`).toString('base64')
-        
+
         //s3 params
         let fileParams = {
             Bucket: process.env.BUCKET,
@@ -263,10 +335,14 @@ const uploadProfileImage = async (req,res,next) => {
                 res.send('Upload to S3 failed')
             } else {
                 const url = data.Location
-                const profile =  Profile.findByIdAndUpdate(id,  {$set: { profileImage: url } })
-                .then(profile => {
-                    console.log(profile);
-                })
+                const profile = Profile.findByIdAndUpdate(id, {
+                        $set: {
+                            profileImage: url
+                        }
+                    })
+                    .then(profile => {
+                        console.log(profile);
+                    })
             }
         })
         //send back profile
@@ -282,15 +358,17 @@ const uploadProfileImage = async (req,res,next) => {
 // returns an array of approved client profiles
 const profilesApproved = async (req, res, next) => {
     try {
-        const approvedProfiles = await Profile.find({approved: true})
+        const approvedProfiles = await Profile.find({
+                approved: true
+            })
             .populate('userId');
         const approvedProfilesClients = approvedProfiles.map((approvedProfile) => {
-            if(!approvedProfile.userId.admin){
+            if (!approvedProfile.userId.admin) {
                 return approvedProfile
             }
         })
         res.send(approvedProfilesClients);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(404).send('an error occurred');
     }
@@ -300,26 +378,26 @@ const profilesApproved = async (req, res, next) => {
 // returns an array of onboarding client profiles (where approved attribute on profile is false)
 const profilesOnboarding = async (req, res, next) => {
     try {
-        const onboardingProfiles = await Profile.find({approved: false})
+        const onboardingProfiles = await Profile.find({
+                approved: false
+            })
             .populate('userId');
         const onboardingProfilesClients = [];
         onboardingProfiles.forEach((onboardingProfile) => {
-            if(onboardingProfile.userId.admin === false) {
+            if (onboardingProfile.userId.admin === false) {
                 onboardingProfilesClients.push(onboardingProfile);
             }
         })
         res.send(onboardingProfilesClients);
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         return res.status(404).send('an error occurred');
     }
 }
 
-
-
 module.exports = {
     create,
-    index, 
+    index,
     show,
     findByUser,
     update,
@@ -329,5 +407,7 @@ module.exports = {
     uploadDocument,
     uploadProfileImage,
     profilesApproved,
-    profilesOnboarding
+    profilesOnboarding,
+    getDocument,
+    deleteDocument
 }
