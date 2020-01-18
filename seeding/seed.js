@@ -20,7 +20,7 @@ const seedDb = async () => {
     // client users
     const user1 = await User.create({
         email: 'alice@mail.com', 
-        password: 'password'
+        password: 'Password1!'
     });
 
     const user2 = await User.create({
@@ -46,7 +46,7 @@ const seedDb = async () => {
     // admin users
     const user6 = await User.create({
         email: 'admin-emma@mail.com', 
-        password: 'password',
+        password: 'Password1!',
         admin: true
     });
 

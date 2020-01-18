@@ -91,6 +91,7 @@ const updateByUser = async (req, res, next) => {
         const definedAttributes = getValidProfileAttributes(req);
         // console.log(definedAttributes);
         const profile = await Profile.findOne({ userId: id });
+        console.log(profile);
         for(let attribute in definedAttributes) {
             profile[attribute] = definedAttributes[attribute];
         }
