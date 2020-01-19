@@ -1,8 +1,10 @@
 // Dependencies
 
-// Import Conversation model
+// Import models
 const Conversation = require('../models/Conversation');
 const User = require('../models/User');
+const Profile = require('../models/Profile');
+const Message = require('../models/Message');
 
 // POST /conversations
 // create a new conversation
@@ -74,23 +76,73 @@ const show = async (req, res, next) => {
 }
 
 // GET /conversations/findByUser/:id
-// return all conversations for a given user id
+// return all conversations for a given user id. This custom object contains the profiles of each user
+// as well as the conversatiom id and date created
 const findByUser = async (req, res, next) => {
     try {
         const userId = req.params.id;
         const allConversations = await Conversation.find()
+
         const userConversations = [];
         allConversations.forEach((conversation) => {
             if(conversation.participants.includes(userId)) {
                 userConversations.push(conversation);
             }
         })
-        return res.send(userConversations);
+
+        if(!userConversations.length) {
+            res.send()
+        }
+
+        const getUserConversationsPopulated = async () => {
+            // .map() will return an array of promises
+            const userConversationsPopulated = userConversations.map(async (conversation) => {
+                // get the clients profile
+                const conversationPopulated = {
+                    participants: [],
+                    _id: null,
+                    messages: []
+                };
+
+                // get profiles
+                const clientUserId = conversation.participants[0]._id;
+                const clientProfile = await Profile.findOne({ userId: clientUserId })
+                    .populate({
+                        path: 'userId',
+                        model: 'User'
+                    });
+                const adminUserId = conversation.participants[1]._id;
+                const adminProfile = await Profile.findOne({ userId: adminUserId })
+                    .populate({
+                        path: 'userId',
+                        model: 'User'
+                    });
+                conversationPopulated.participants.push(clientProfile, adminProfile)
+
+                // get conversation id
+                conversationPopulated._id = conversation._id;
+
+                // get all messages for that conversation
+                const messages = await Message.find({ conversationId: conversation._id })
+                    .populate({ path: 'author', model: 'User' })
+                conversationPopulated.messages.push(...messages);
+
+                return conversationPopulated;
+            
+            })
+            // here we pass in the array of promises and wait till they are all resolved prior to returning
+            return Promise.all(userConversationsPopulated).then();
+        }
+
+        const userConversationsPopulated = await getUserConversationsPopulated();
+        res.send(userConversationsPopulated);
+       
     } catch(err) {
         console.log(err);
         return res.status(500).send('an error occurred');
     }
 }
+
 
 // PUT /conversations/:id
 // update a conversation by conversation id
