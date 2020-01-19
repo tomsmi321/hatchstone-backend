@@ -91,7 +91,7 @@ const findByUser = async (req, res, next) => {
         })
 
         if(!userConversations.length) {
-            res.send('no conversations')
+            res.send()
         }
 
         const getUserConversationsPopulated = async () => {

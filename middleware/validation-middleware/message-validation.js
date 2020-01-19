@@ -7,6 +7,9 @@ const NewMessageValidationSchema = Joi.object().keys({
                .alphanum()
                .max(100)
                .required(),
+    profileId: Joi.string()
+                  .max(100)
+                  .required(),
     conversationId: Joi.string()
                .alphanum()
                .max(100)
