@@ -33,6 +33,7 @@ connectDb(db, dbOptions)
 // allow cors requests
 app.use(cors());
 
+
 // import routes
 app.use(require('./routes'));
 

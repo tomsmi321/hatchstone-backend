@@ -24,12 +24,15 @@ let s3credentials = new AWS.S3({
 
 // POST /profiles
 // create a new profile
+
+
 const create = async (req, res, next) => {
     try {
         // ensure user does not already have a profile
         const {
             userId
         } = req.body;
+        console.log(userId)
         const existingUserProfile = await Profile.findOne({
             userId: userId
         });
@@ -37,12 +40,14 @@ const create = async (req, res, next) => {
             throw 'user profile already exists';
         }
         const newProfile = await Profile.create(req.body);
-        return res.send(newProfile);
+        res.send(newProfile);
     } catch (err) {
         console.log(err);
         return res.status(404).send('an error occurred');
     }
 }
+
+
 
 
 // GET /profiles
@@ -86,7 +91,7 @@ const findByUser = async (req, res, next) => {
         return res.send(profile);
     } catch (err) {
         console.log(err);
-        return res.status(500).send('an error occurred');
+        return res.status(500).send('profile not found');
     }
 }
 
@@ -274,22 +279,31 @@ const uploadDocument = async (req, res, next) => {
 
 }
 
-//retrieve image from s3 
-
-const getDocument = async (req, res, next) => {
-    const {
-        document
-    } = req.body
-    const {
-        id
-    } = req.params
-    const profile = await Profile.findById(id)
-    console.log(profile)
-}
-
 //this route will be hit if the user wants to delete their uploaded image.
 const deleteDocument = async (req, res, next) => {
+    try {
+        console.log(req.body)
+        const {
+            docFileName
+        } = req.body
+        console.log(docFileName)
+        const id = req.params.id
+        console.log(id)
+        // const profile = findById(id)
+        const profile = await Profile.findByIdAndUpdate(id, {
+            $pull: {
+                documents: {
+                    fileName: docFileName
+                }
+            }
+        })
 
+        console.log(profile)
+        return res.send(profile)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send("Server Error")
+    }
 }
 
 //  NOTE: This route should be spliced into the update profile route as it is a part of the edit profile form
@@ -402,6 +416,5 @@ module.exports = {
     uploadProfileImage,
     profilesApproved,
     profilesOnboarding,
-    getDocument,
     deleteDocument
 }
