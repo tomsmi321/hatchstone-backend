@@ -28,6 +28,7 @@ const getValidProfileAttributes = (req) => {
     return definedAttributes;
 }
 
+
 module.exports = {
     getValidProfileAttributes
 }
