@@ -392,18 +392,6 @@ const seedDb = async () => {
         dateCreated: Date.now()
     });
 
-    const message3Convo3 = await Message.create({
-        author: user2,
-        conversationId: conversation3._id,
-        profileId: profile2._id,
-        content: `Ok great, I should have that uploaded later this afternoon.`,
-        dateCreated: Date.now()
-    });
-
-
-    ////////
-
-
     const message1Convo4 = await Message.create({
         author: user4,
         conversationId: conversation4._id,
