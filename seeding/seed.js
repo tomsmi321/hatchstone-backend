@@ -468,7 +468,7 @@ const seedDb = async () => {
     const message1Convo6 = await Message.create({
         author: user8,
         conversationId: conversation6._id,
-        profileId: profile7._id,
+        profileId: profile8._id,
         content: 'Hi Nick, Was good to finally catch up and meet. Thanks for the documents you have uploaded however could please re-upload all as they are quite blurry, sorry for the inconvenience',
         dateCreated: Date.now()
     });
@@ -476,6 +476,7 @@ const seedDb = async () => {
     const message2Convo6 = await Message.create({
         author: user9,
         conversationId: conversation6._id,
+        profileId: profile9._id,
         content: 'Hey Jamie, It was great to finally catch up, no worries that should not be a problem. I will get them to you within the week.',
         dateCreated: Date.now()
     });
