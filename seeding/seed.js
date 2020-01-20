@@ -130,20 +130,19 @@ const seedDb = async () => {
         documents: [
             {
                 name: 'Company Verification',
-                url: 'https://imgur.com/a/xdOopzt',
-                fileName: 'Company-Verification.png'
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Company-Verification.png',
+                fileName: 'Company-Verification.png'   
             },
             {
                 name: 'Owner Identification',
-                url: 'hhttps://imgur.com/a/P1iCRfc',
-                fileName: 'Owner-Identification.jpg'
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Owner-Identification.jpg',
+                fileName: 'Owner-Identification.jpg'  
             },
             {
-                name: 'Wholesale Investor Certification',
-                url: 'https://imgur.com/a/UVhnDUj',
-                fileName: 'Wholesale-Investor-Certification.png'
+                name: 'Section 708 Wholesale Investor Certification.jpg',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
+                fileName: 'Section708-Wholesale-Investor-Certification.jpg'  
             }
-
         ]
     });
 
@@ -251,20 +250,19 @@ const seedDb = async () => {
         documents: [
             {
                 name: 'Company Verification',
-                url: 'https://imgur.com/a/xdOopzt',
-                fileName: 'Company-Verification.png'
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Company-Verification.png',
+                fileName: 'Company-Verification.png'   
             },
             {
                 name: 'Owner Identification',
-                url: 'hhttps://imgur.com/a/P1iCRfc',
-                fileName: 'Owner-Identification.jpg'
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Owner-Identification.jpg',
+                fileName: 'Owner-Identification.jpg'  
             },
             {
-                name: 'Wholesale Investor Certification',
-                url: 'https://imgur.com/a/UVhnDUj',
-                fileName: 'Wholesale-Investor-Certification.png'
+                name: 'Section 708 Wholesale Investor Certification.jpg',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
+                fileName: 'Section708-Wholesale-Investor-Certification.jpg'
             }
-
         ]
     });
 
