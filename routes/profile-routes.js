@@ -14,7 +14,6 @@ const {
     uploadProfileImage,
     profilesApproved,
     profilesOnboarding,
-    getDocument,
     deleteDocument,      
   } = require('../controllers/profiles-controller');
 // const { checkAuth } = require('../middleware/auth-middleware');
@@ -46,9 +45,10 @@ router.post('/:id/uploadDocument', multer({storage: storage}).fields(fields), up
 router.post('/:id/uploadProfileImage', multer({storage: storage}).fields(fields), uploadProfileImage)
 
 
-router.get('/:id/getDocument', getDocument)
 
-// router.delete('/:id/deleteDocument', deleteDocument)
+
+router.post('/:id/delete-document', deleteDocument)
+
 // router.delete('/:id/deleteProfileImage',deleteProfileImage)
 
 module.exports = router;
