@@ -19,39 +19,39 @@ const seedDb = async () => {
     console.log('Attempting to seed users...');
     // client users
     const user1 = await User.create({
-        email: 'alice@mail.com', 
+        email: 'alice@mail.com',
         password: 'Password1!'
     });
 
     const user2 = await User.create({
-        email: 'sarah@mail.com', 
+        email: 'sarah@mail.com',
         password: 'password'
     });
 
     const user3 = await User.create({
-        email: 'george@mail.com', 
+        email: 'george@mail.com',
         password: 'password'
     });
 
     const user4 = await User.create({
-        email: 'matthew@mail.com', 
+        email: 'matthew@mail.com',
         password: 'password'
     });
 
     const user5 = await User.create({
-        email: 'david@mail.com', 
+        email: 'david@mail.com',
         password: 'password'
     });
 
     // admin users
     const user6 = await User.create({
-        email: 'admin-emma@mail.com', 
+        email: 'admin-emma@mail.com',
         password: 'Password1!',
         admin: true
     });
 
     const user7 = await User.create({
-        email: 'admin-kyle@mail.com', 
+        email: 'admin-kyle@mail.com',
         password: 'password',
         admin: true
     });
@@ -63,7 +63,7 @@ const seedDb = async () => {
     });
 
     ////
-    
+
     const user9 = await User.create({
         email: 'Nick@mail.com',
         password: 'password'
@@ -81,7 +81,7 @@ const seedDb = async () => {
 
 
 
-    
+
 
     console.log('Users sucessfully seeded 👍');
 
@@ -131,17 +131,17 @@ const seedDb = async () => {
             {
                 name: 'Company Verification',
                 url: 'https://imgur.com/a/xdOopzt',
-                fileName: 'Company-Verification.png'   
+                fileName: 'Company-Verification.png'
             },
             {
                 name: 'Owner Identification',
                 url: 'hhttps://imgur.com/a/P1iCRfc',
-                fileName: 'Owner-Identification.jpg'  
+                fileName: 'Owner-Identification.jpg'
             },
             {
                 name: 'Wholesale Investor Certification',
                 url: 'https://imgur.com/a/UVhnDUj',
-                fileName: 'Wholesale-Investor-Certification.png'  
+                fileName: 'Wholesale-Investor-Certification.png'
             }
 
         ]
@@ -176,7 +176,7 @@ const seedDb = async () => {
     });
 
     ////// admin profiles
-    
+
     const profile6 = await Profile.create({
         firstName: 'emma',
         lastName: 'miller',
@@ -220,7 +220,7 @@ const seedDb = async () => {
         profileImage: 'https://i.imgur.com/7CPI9oX.jpg',
         documents: []
     });
-    
+
     ////////
 
     const profile9 = await Profile.create({
@@ -252,17 +252,17 @@ const seedDb = async () => {
             {
                 name: 'Company Verification',
                 url: 'https://imgur.com/a/xdOopzt',
-                fileName: 'Company-Verification.png'   
+                fileName: 'Company-Verification.png'
             },
             {
                 name: 'Owner Identification',
                 url: 'hhttps://imgur.com/a/P1iCRfc',
-                fileName: 'Owner-Identification.jpg'  
+                fileName: 'Owner-Identification.jpg'
             },
             {
                 name: 'Wholesale Investor Certification',
                 url: 'https://imgur.com/a/UVhnDUj',
-                fileName: 'Wholesale-Investor-Certification.png'  
+                fileName: 'Wholesale-Investor-Certification.png'
             }
 
         ]
@@ -323,14 +323,14 @@ const seedDb = async () => {
 
 
     console.log('Conversations sucessfully seeded 👍');
-    
+
     // ---create messages---
     console.log('Attempting to seed messages...');
     const message1Convo1 = await Message.create({
         author: user1,
         conversationId: conversation1._id,
         profileId: profile1._id,
-        content: `Hi Emma, could you please clarify if I 
+        content: `Hi Emma, could you please clarify if I
         can used a foreign drivers for verification purposes?`,
         dateCreated: Date.now()
     });
@@ -340,7 +340,7 @@ const seedDb = async () => {
         conversationId: conversation1._id,
         profileId: profile6._id,
         content: `Hi Alice, unfortunatley a foreign drivers license is not
-        an acceptable form of identification. We do however accept a foreign 
+        an acceptable form of identification. We do however accept a foreign
         passport.`,
         dateCreated: Date.now()
     });
@@ -360,7 +360,7 @@ const seedDb = async () => {
         conversationId: conversation2._id,
         profileId: profile6._id,
         content: `Good afternoon Sarah. Thank you for uploading a copy of your passport.
-        However, please note we require all documents to be certified. Could you 
+        However, please note we require all documents to be certified. Could you
         please uplaod a certified copy at your earliest convenience.`,
         dateCreated: Date.now()
     });
@@ -372,7 +372,7 @@ const seedDb = async () => {
         content: `Thanks, I will upload by the end of the week.`,
         dateCreated: Date.now()
     });
-    
+
     /////////
 
     const message1Convo3 = await Message.create({
@@ -432,7 +432,7 @@ const seedDb = async () => {
         conversationId: conversation5._id,
         profileId: profile7._id,
         content: `Hi David, I hope you are well today. Great meeting you at our investor
-        information session last night. Thanks for the documents you have sent through so 
+        information session last night. Thanks for the documents you have sent through so
         far. Could you kindly please upload a clearer copy of you driver license?`,
         dateCreated: Date.now()
     });
@@ -458,7 +458,7 @@ const seedDb = async () => {
         author: user7,
         conversationId: conversation5._id,
         profileId: profile7._id,
-        content: `Sounds good David, I will be in the office till 3pm before heading out 
+        content: `Sounds good David, I will be in the office till 3pm before heading out
         for some meetings, just let me know when you wanted to come in.`,
         dateCreated: Date.now()
     });
@@ -468,13 +468,15 @@ const seedDb = async () => {
     const message1Convo6 = await Message.create({
         author: user8,
         conversationId: conversation6._id,
+        profileId: profile8._id,
         content: 'Hi Nick, Was good to finally catch up and meet. Thanks for the documents you have uploaded however could please re-upload all as they are quite blurry, sorry for the inconvenience',
-        dateCreated: Date.now()  
+        dateCreated: Date.now()
     });
 
     const message2Convo6 = await Message.create({
         author: user9,
         conversationId: conversation6._id,
+        profileId: profile9._id,
         content: 'Hey Jamie, It was great to finally catch up, no worries that should not be a problem. I will get them to you within the week.',
         dateCreated: Date.now()
     });
@@ -484,6 +486,7 @@ const seedDb = async () => {
     const message1Convo7 = await Message.create({
         author: user10,
         conversationId: conversation7._id,
+        profileId: profile10._id,
         content: 'Hi Jamie, was a bit unsure about which documents you were after after we last spoke, could you please let me know.',
         dateCreated: Date.now()
     });
@@ -491,8 +494,9 @@ const seedDb = async () => {
     const message2Convo7 = await Message.create({
         author: user8,
         conversationId: conversation7._id,
+        profileId: profile8._id,
         content: 'Hi Matt, no worries at all. The remaining document we require is just a photocopy of your drivers license. Thanks',
-        dateCreated: Date.now()   
+        dateCreated: Date.now()
     });
 
     /////////
@@ -500,21 +504,23 @@ const seedDb = async () => {
     const message1Convo8 = await Message.create({
         author: user8,
         conversationId: conversation8._id,
+        profileId: profile8._id,
         content: 'Hello Reece, I see you have not uploaded any documents yet. Could I please ask that you submit the Company Verification, Owner Identification and Wholesale Investor Certification as soon as possible. Thanks',
-        dateCreated: Date.now() 
+        dateCreated: Date.now()
     });
 
     const message2Convo8 = await Message.create({
         author: user11,
         conversationId: conversation8._id,
+        profileId: profile11._id,
         content: 'Hi Jamie, that is correct I have not uploaded any docs yet, I will get my assistant to do that and hopefully have all available by end of next week.',
-        dateCreated: Date.now() 
+        dateCreated: Date.now()
     });
 
     console.log('Messages sucessfully seeded 👍');
 }
 
-   
+
 module.exports = {
     seedDb,
     clearDb
