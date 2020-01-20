@@ -7,8 +7,10 @@ require('dotenv').config()
 // create an instance of an express server
 const app = new express();
 
-// db name
-const db = 'hatchstone'
+
+
+//connect to
+const mongoUri = process.env.MONGOURI
 
 // db options
 const dbOptions = {
@@ -18,9 +20,9 @@ const dbOptions = {
     useFindAndModify: false
 }
 
-const connectDb = async (db, dbOptions) => {
+const connectDb = async () => {
     try {
-        await mongoose.connect(`mongodb://localhost:27017/${db}`, dbOptions);
+        await mongoose.connect(mongoUri, dbOptions);
         console.log('success: mongodb connected ✅');
     } catch(err) {
         console.log('error: mongodb not connected 😞');
@@ -28,7 +30,7 @@ const connectDb = async (db, dbOptions) => {
 }
 
 // connect to the db
-connectDb(db, dbOptions)
+connectDb()
 
 // allow cors requests
 app.use(cors());
