@@ -56,6 +56,33 @@ const seedDb = async () => {
         admin: true
     });
 
+    const user8 = await User.create({
+        email: 'admin-Jamie@mail.com',
+        password: 'password',
+        admin: true
+    });
+
+    ////
+    
+    const user9 = await User.create({
+        email: 'Nick@mail.com',
+        password: 'password'
+    });
+
+    const user10 = await User.create({
+        email: 'Matt@mail.com',
+        password: 'password'
+    });
+
+    const user11 = await User.create({
+        email: 'Reece@mail.com',
+        password: 'password'
+    });
+
+
+
+    
+
     console.log('Users sucessfully seeded 👍');
 
     // ---create profiles---
@@ -71,7 +98,7 @@ const seedDb = async () => {
         approved: true,
         investorType: 'individual',
         dateStarted: Date.now(),
-        profileImage: '',
+        profileImage: 'https://i.imgur.com/U85CK2K.jpg?1',
         documents: []
     });
 
@@ -85,7 +112,7 @@ const seedDb = async () => {
         approved: true,
         investorType: 'individual',
         dateStarted: Date.now(),
-        profileImage: '',
+        profileImage: 'https://i.imgur.com/AF7pCun.jpg',
         documents: []
     });
 
@@ -99,11 +126,24 @@ const seedDb = async () => {
         approved: false,
         investorType: 'company',
         dateStarted: Date.now(),
-        profileImage: 'https://floridatax.com/wp-content/uploads/2015/03/LawFirmProfile6c-200x200.jpg',
+        profileImage: 'https://i.imgur.com/tiUwAs7.jpg',
         documents: [
-            'Company verification, company_verification.doc',
-            'Owner identification, id.png',
-            'Wholesale investor certification, certification.doc'
+            {
+                name: 'Company Verification',
+                url: 'https://imgur.com/a/xdOopzt',
+                fileName: 'Company-Verification.png'   
+            },
+            {
+                name: 'Owner Identification',
+                url: 'hhttps://imgur.com/a/P1iCRfc',
+                fileName: 'Owner-Identification.jpg'  
+            },
+            {
+                name: 'Wholesale Investor Certification',
+                url: 'https://imgur.com/a/UVhnDUj',
+                fileName: 'Wholesale-Investor-Certification.png'  
+            }
+
         ]
     });
 
@@ -135,22 +175,115 @@ const seedDb = async () => {
         documents: []
     });
 
-    // admin profiles
+    ////// admin profiles
+    
     const profile6 = await Profile.create({
         firstName: 'emma',
         lastName: 'miller',
         phone: '0498223665',
         userId: user6._id,
-        profileImage: ''
+        address: '123 Belfour Street, Toorak VIC 3142',
+        appProgress: 50,
+        approved: false,
+        investorType: 'individual',
+        dateStarted: Date.now(),
+        profileImage: 'https://i.imgur.com/RlV8nhe.jpg',
+        documents: []
     });
 
     const profile7 = await Profile.create({
-        firstName: 'kyle',
+
+        firstName: 'Kyle',
+
         lastName: 'johnson',
         phone: '0409377455',
         userId: user7._id,
-        profileImage: ''
+        address: '12 Wallace St, Balwyn VIC 3103',
+        appProgress: 30,
+        approved: false,
+        investorType: 'individual',
+        dateStarted: Date.now(),
+        profileImage: 'https://i.imgur.com/mySxm32.jpg',
+        documents: []
     });
+
+    const profile8 = await Profile.create({
+        firstName: 'Jamie',
+        lastName: 'Adams',
+        phone: '0406775442',
+        userId: user8._id,
+        address: '17 Lawford St, Doncaster VIC 3108',
+        appProgress: 45,
+        approved: false,
+        investorType: 'individual',
+        dateStarted: Date.now(),
+        profileImage: 'https://i.imgur.com/7CPI9oX.jpg',
+        documents: []
+    });
+    
+    ////////
+
+    const profile9 = await Profile.create({
+        firstName: 'Nick',
+        lastName: 'Doe',
+        phone: '0412375987',
+        userId: user9._id,
+        address: '22 Meader St, Doncaster VIC 3108',
+        appProgress: 60,
+        approved: false,
+        investorType: 'individual',
+        dateStarted: Date.now(),
+        profileImage: 'https://i.imgur.com/4HgnGas.jpg',
+        documents: []
+    });
+
+    const profile10 = await Profile.create({
+        firstName: 'Matt',
+        lastName: 'Grey',
+        phone: '0410191706',
+        userId: user10._id,
+        address: '125 Berringa Road, Park Orchards VIC 3114',
+        // appProgress: 20,
+        approved: false,
+        investorType: 'company',
+        dateStarted: Date.now(),
+        profileImage: 'https://i.imgur.com/j1UPc19.jpg',
+        documents: [
+            {
+                name: 'Company Verification',
+                url: 'https://imgur.com/a/xdOopzt',
+                fileName: 'Company-Verification.png'   
+            },
+            {
+                name: 'Owner Identification',
+                url: 'hhttps://imgur.com/a/P1iCRfc',
+                fileName: 'Owner-Identification.jpg'  
+            },
+            {
+                name: 'Wholesale Investor Certification',
+                url: 'https://imgur.com/a/UVhnDUj',
+                fileName: 'Wholesale-Investor-Certification.png'  
+            }
+
+        ]
+    });
+
+    const profile11 = await Profile.create({
+        firstName: 'Reece',
+        lastName: 'Jackson',
+        phone: '0491901076',
+        userId: user11._id,
+        address: '1 John St, Lilydale VIC 3140',
+        appProgress: 35,
+        approved: false,
+        investorType: 'individual',
+        dateStarted: Date.now(),
+        profileImage: 'https://i.imgur.com/yWptPx5.jpg',
+        documents: []
+    });
+
+
+
 
     console.log('Profiles sucessfully seeded 👍');
 
@@ -175,6 +308,19 @@ const seedDb = async () => {
     const conversation5 = await Conversation.create({
         participants: [user5, user7]
     });
+
+    const conversation6 = await Conversation.create({
+        participants: [user8, user9]
+    });
+
+    const conversation7 = await Conversation.create({
+        participants: [user8, user10]
+    });
+
+    const conversation8 = await Conversation.create({
+        participants: [user8, user11]
+    });
+
 
     console.log('Conversations sucessfully seeded 👍');
     
@@ -207,6 +353,8 @@ const seedDb = async () => {
         dateCreated: Date.now()
     });
 
+    ////////
+
     const message1Convo2 = await Message.create({
         author: user6,
         conversationId: conversation2._id,
@@ -225,6 +373,8 @@ const seedDb = async () => {
         dateCreated: Date.now()
     });
     
+    /////////
+
     const message1Convo3 = await Message.create({
         author: user3,
         conversationId: conversation3._id,
@@ -252,6 +402,10 @@ const seedDb = async () => {
         dateCreated: Date.now()
     });
 
+
+    ////////
+
+
     const message1Convo4 = await Message.create({
         author: user4,
         conversationId: conversation4._id,
@@ -270,6 +424,8 @@ const seedDb = async () => {
         acceptable agents: https://www.vit.vic.edu.au/professional-responsibilities/for-teacher/nphc/list-of-certified-persons`,
         dateCreated: Date.now()
     });
+
+    ////////
 
     const message1Convo5 = await Message.create({
         author: user7,
@@ -305,6 +461,54 @@ const seedDb = async () => {
         content: `Sounds good David, I will be in the office till 3pm before heading out 
         for some meetings, just let me know when you wanted to come in.`,
         dateCreated: Date.now()
+    });
+
+    ////////
+
+    const message1Convo6 = await Message.create({
+        author: user8,
+        conversationId: conversation6._id,
+        content: 'Hi Nick, Was good to finally catch up and meet. Thanks for the documents you have uploaded however could please re-upload all as they are quite blurry, sorry for the inconvenience',
+        dateCreated: Date.now()  
+    });
+
+    const message2Convo6 = await Message.create({
+        author: user9,
+        conversationId: conversation6._id,
+        content: 'Hey Jamie, It was great to finally catch up, no worries that should not be a problem. I will get them to you within the week.',
+        dateCreated: Date.now()
+    });
+
+    ////////
+
+    const message1Convo7 = await Message.create({
+        author: user10,
+        conversationId: conversation7._id,
+        content: 'Hi Jamie, was a bit unsure about which documents you were after after we last spoke, could you please let me know.',
+        dateCreated: Date.now()
+    });
+
+    const message2Convo7 = await Message.create({
+        author: user8,
+        conversationId: conversation7._id,
+        content: 'Hi Matt, no worries at all. The remaining document we require is just a photocopy of your drivers license. Thanks',
+        dateCreated: Date.now()   
+    });
+
+    /////////
+
+    const message1Convo8 = await Message.create({
+        author: user8,
+        conversationId: conversation8._id,
+        content: 'Hello Reece, I see you have not uploaded any documents yet. Could I please ask that you submit the Company Verification, Owner Identification and Wholesale Investor Certification as soon as possible. Thanks',
+        dateCreated: Date.now() 
+    });
+
+    const message2Convo8 = await Message.create({
+        author: user11,
+        conversationId: conversation8._id,
+        content: 'Hi Jamie, that is correct I have not uploaded any docs yet, I will get my assistant to do that and hopefully have all available by end of next week.',
+        dateCreated: Date.now() 
     });
 
     console.log('Messages sucessfully seeded 👍');
