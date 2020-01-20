@@ -57,13 +57,14 @@ const findByAuth = async (req, res, next) => {
 }
 
 // GET /messages/findByConversation/:id
-// return all messages by a given author id
+// return all messages by a given conversationId id
 const findByConversation = async (req, res, next) => {
     try {
         const conversationId = req.params.id;
-        const message = await Message.find({ conversationId: conversationId })
-        .populate({ path: 'author', model: 'User' })
-        return res.send(message);
+        var populateQuery = [{path:'author', model:'User'}, {path:'profileId', model:'Profile'}];
+        const messages = await Message.find({ conversationId: conversationId })
+        .populate(populateQuery)
+        return res.send(messages);
     } catch(err) {
         console.log(err);
         return res.status(500).send('an error occurred');

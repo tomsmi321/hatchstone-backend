@@ -20,7 +20,7 @@ const seedDb = async () => {
     // client users
     const user1 = await User.create({
         email: 'alice@mail.com', 
-        password: 'password'
+        password: 'Password1!'
     });
 
     const user2 = await User.create({
@@ -46,7 +46,7 @@ const seedDb = async () => {
     // admin users
     const user6 = await User.create({
         email: 'admin-emma@mail.com', 
-        password: 'password',
+        password: 'Password1!',
         admin: true
     });
 
@@ -145,7 +145,7 @@ const seedDb = async () => {
     });
 
     const profile7 = await Profile.create({
-        firstName: 'cole',
+        firstName: 'kyle',
         lastName: 'johnson',
         phone: '0409377455',
         userId: user7._id,
@@ -183,6 +183,7 @@ const seedDb = async () => {
     const message1Convo1 = await Message.create({
         author: user1,
         conversationId: conversation1._id,
+        profileId: profile1._id,
         content: `Hi Emma, could you please clarify if I 
         can used a foreign drivers for verification purposes?`,
         dateCreated: Date.now()
@@ -191,6 +192,7 @@ const seedDb = async () => {
     const message2Convo1 = await Message.create({
         author: user6,
         conversationId: conversation1._id,
+        profileId: profile6._id,
         content: `Hi Alice, unfortunatley a foreign drivers license is not
         an acceptable form of identification. We do however accept a foreign 
         passport.`,
@@ -200,6 +202,7 @@ const seedDb = async () => {
     const message3Convo1 = await Message.create({
         author: user1,
         conversationId: conversation1._id,
+        profileId: profile1._id,
         content: `Great thanks!`,
         dateCreated: Date.now()
     });
@@ -207,6 +210,7 @@ const seedDb = async () => {
     const message1Convo2 = await Message.create({
         author: user6,
         conversationId: conversation2._id,
+        profileId: profile6._id,
         content: `Good afternoon Sarah. Thank you for uploading a copy of your passport.
         However, please note we require all documents to be certified. Could you 
         please uplaod a certified copy at your earliest convenience.`,
@@ -216,6 +220,7 @@ const seedDb = async () => {
     const message2Convo2 = await Message.create({
         author: user2,
         conversationId: conversation2._id,
+        profileId: profile2._id,
         content: `Thanks, I will upload by the end of the week.`,
         dateCreated: Date.now()
     });
@@ -223,6 +228,7 @@ const seedDb = async () => {
     const message1Convo3 = await Message.create({
         author: user3,
         conversationId: conversation3._id,
+        profileId: profile3._id,
         content: `Hi Emma, I just wanted to confirm if my accountant managed to get
         in contact with you yesterday?`,
         dateCreated: Date.now()
@@ -231,6 +237,7 @@ const seedDb = async () => {
     const message2Convo3 = await Message.create({
         author: user6,
         conversationId: conversation3._id,
+        profileId: profile6._id,
         content: `Hi George. Yes I spoke to your accountant yesterday afternoon. He
         was able to confirm the details we needed. Looks like you just need to submit
         proof of wholesaler investor certification and you will be good to go.`,
@@ -240,6 +247,7 @@ const seedDb = async () => {
     const message3Convo3 = await Message.create({
         author: user2,
         conversationId: conversation3._id,
+        profileId: profile2._id,
         content: `Ok great, I should have that uploaded later this afternoon.`,
         dateCreated: Date.now()
     });
@@ -247,6 +255,7 @@ const seedDb = async () => {
     const message1Convo4 = await Message.create({
         author: user4,
         conversationId: conversation4._id,
+        profileId: profile4._id,
         content: `Hi Kyle. It was great to chat to you on the phone the other day.
         Do these documents have to be certifed by a JP?`,
         dateCreated: Date.now()
@@ -255,6 +264,7 @@ const seedDb = async () => {
     const message2Convo4 = await Message.create({
         author: user7,
         conversationId: conversation4._id,
+        profileId: profile7._id,
         content: `Good morning Matthew. The documents do have to be certifed, however
         it does not necessarily have to be by a JP. Please refer to this website for
         acceptable agents: https://www.vit.vic.edu.au/professional-responsibilities/for-teacher/nphc/list-of-certified-persons`,
@@ -264,6 +274,7 @@ const seedDb = async () => {
     const message1Convo5 = await Message.create({
         author: user7,
         conversationId: conversation5._id,
+        profileId: profile7._id,
         content: `Hi David, I hope you are well today. Great meeting you at our investor
         information session last night. Thanks for the documents you have sent through so 
         far. Could you kindly please upload a clearer copy of you driver license?`,
@@ -273,6 +284,7 @@ const seedDb = async () => {
     const message2Convo5 = await Message.create({
         author: user5,
         conversationId: conversation5._id,
+        profileId: profile5._id,
         content: `I will get my assistant take care of this and send through later today.`,
         dateCreated: Date.now()
     });
@@ -280,6 +292,7 @@ const seedDb = async () => {
     const message3Convo5 = await Message.create({
         author: user5,
         conversationId: conversation5._id,
+        profileId: profile5._id,
         content: `I will be stopping by your office tomorrow in anycase to ask a few more
         questions I had regarding one of your products`,
         dateCreated: Date.now()
@@ -288,6 +301,7 @@ const seedDb = async () => {
     const message4Convo5 = await Message.create({
         author: user7,
         conversationId: conversation5._id,
+        profileId: profile7._id,
         content: `Sounds good David, I will be in the office till 3pm before heading out 
         for some meetings, just let me know when you wanted to come in.`,
         dateCreated: Date.now()
