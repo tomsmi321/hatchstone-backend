@@ -24,8 +24,6 @@ let s3credentials = new AWS.S3({
 
 // POST /profiles
 // create a new profile
-
-
 const create = async (req, res, next) => {
     try {
         // ensure user does not already have a profile
@@ -46,8 +44,6 @@ const create = async (req, res, next) => {
         return res.status(404).send('an error occurred');
     }
 }
-
-
 
 
 // GET /profiles
@@ -106,9 +102,11 @@ const updateByUser = async (req, res, next) => {
         const id = req.params.id;
         const definedAttributes = getValidProfileAttributes(req);
         // console.log(definedAttributes);
-        const profile = await Profile.findOne({ userId: id });
+        const profile = await Profile.findOne({
+            userId: id
+        });
         console.log(profile);
-        for(let attribute in definedAttributes) {
+        for (let attribute in definedAttributes) {
             profile[attribute] = definedAttributes[attribute];
         }
         await profile.save();
@@ -163,29 +161,18 @@ const destroyByUser = async (req, res, next) => {
     }
 }
 
-//Desc:     Route for user to upload important documents to s3
-//Route :   /profiles/:id/uploadDocument
-//Method:   POST
-//Access:   Private
+//middleware for uploading to s3
 const uploadDocument = async (req, res, next) => {
     try {
         //get document from req and convert to lowercase
         let documentString = req.body.document
-
         //get profile id from params
-        const {
-            id
-        } = req.params
-
+        const id = req.params.id
         //get file from request
         const {
             file
         } = req.files
-
         const fileName = file[0].originalname
-        //convert to encrypted string
-        // const name = Buffer.from(`${uniqueValue}${file[0].originalname}`).toString('base64')
-
         //s3 params
         let fileParams = {
             Bucket: process.env.BUCKET,
@@ -208,74 +195,32 @@ const uploadDocument = async (req, res, next) => {
                     url: url,
                     fileName: fileName
                 }
-
-                const profile = Profile.findByIdAndUpdate(id, {
-                        $push: {
-                            documents: document
-                        }
-                    })
-                    .then(profile => {
-                        console.log(profile);
-                    })
+                req.document = document
+                next()
             }
         })
-        //send back profile
-        const profile = await Profile.findById(id)
-        console.log(profile)
-        return res.send(profile)
     } catch (err) {
         console.log(err)
         res.status(500).send("Server Error")
     }
-    // const profile = Profile.findById(id)
-    // console.log(profile)
-    // const investorTypeString = profile.investorType.toLowerCase()
-    // // using the value from the investorType field to filter and retrieve the respective investorType model instance
-    // if (investorTypeString === 'individual') {
-    //   const investorTypeModel = Individual.findOne({profileId: id}, function(err,obj) { console.log(obj) })
-    //   if (file.name === 'investorIdentification') {
-    //     investorTypeModel.investorIdentification = url
-    //   } else if (file.name === 'section708WholesaleInvestorCertification'){
-    //     investorTypeModel.section708WholesaleInvestorCertification = url
-    //   } else {
-    //     console.log('an error has occured matching the file name to the respective investorType field')
-    //   }
-    // } else if (investorTypeString === 'individualTrustee') {
-    //   const investorTypeModel = IndividualTrustee.findOne({profileId: id}, function(err,obj) { console.log(obj) })
-    //   if (file.name === 'investorIdentification') {
-    //     investorTypeModel.investorIdentification = url
-    //   } else if (file.name === 'section708WholesaleInvestorCertification'){
-    //     investorTypeModel.section708WholesaleInvestorCertification = url
-    //   } else if (file.name === 'TrustSelfManagedSuperannuationFundVerification'){
-    //     investorTypeModel.TrustSelfManagedSuperannuationFundVerification = url
-    //   } else {
-    //     console.log('an error has occured matching the file name to the respective investorType field')
-    //   }
-    // } else if (investorTypeString === 'company') {
-    //   const investorTypeModel = Company.findOne({profileId: id}, function(err,obj) { console.log(obj) })
-    //   if (file.name === 'companyVerification') {
-    //     investorTypeModel.companyVerification = url
-    //   } else if (file.name === 'section708WholesaleInvestorCertification'){
-    //     investorTypeModel.section708WholesaleInvestorCertification = url
-    //   } else if (file.name === 'DirectorAndBeneficialOwnerIdentification'){
-    //     investorTypeModel.DirectorAndBeneficialOwnerIdentification = url
-    //   } else {
-    //     console.log('an error has occured matching the file name to the respective investorType field')
-    //   }
-    // } else {
-    //   const investorTypeModel = CorporateTrustee.findOne({profileId: id}, function(err,obj) { console.log(obj) })
-    //   if (file.name === 'companyVerification') {
-    //     investorTypeModel.companyVerification = url
-    //   } else if (file.name === 'section708WholesaleInvestorCertification'){
-    //     investorTypeModel.section708WholesaleInvestorCertification = url
-    //   }
-    //   else if (file.name === 'TrustSelfManagedSuperannuationFundVerification'){
-    //     investorTypeModel.TrustSelfManagedSuperannuationFundVerification = url
-    //   } else {
-    //     console.log('an error has occured matching the file name to the respective investorType field')
-    //   }
-    // }
+}
 
+//Desc:     Route for user to upload important documents to s3
+//Route :   /profiles/:userId/uploadDocument
+//Method:   POST
+//Access:   Private
+const pushDocumentToProfile = async (req, res, next) => {
+    try {
+        const profile = await Profile.findOne({
+            userId: req.params.id
+        })
+        profile.documents = [...profile.documents, req.document]
+        console.log(profile)
+        await profile.save()
+        res.send(profile)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
 }
 
 //this route will be hit if the user wants to delete their uploaded image.
@@ -285,33 +230,26 @@ const deleteDocument = async (req, res, next) => {
         const {
             docFileName
         } = req.body
-        console.log(docFileName)
-        const id = req.params.id
-        console.log(id)
-        // const profile = findById(id)
-        const profile = await Profile.findByIdAndUpdate(id, {
-            $pull: {
-                documents: {
-                    fileName: docFileName
-                }
-            }
-        })
 
-        console.log(profile)
-        return res.send(profile)
+        const id = req.params.id
+
+        const profile = await Profile.findOne({
+            userId: id
+        })
+        // console.log(profile.documents)
+        const docs = profile.documents.toObject()
+        const filteredDocs = docs.filter((doc) => {
+            return doc.fileName !== docFileName
+        })
+        profile.documents = filteredDocs
+        await profile.save()
+        res.status(200).send(profile)
     } catch (error) {
         console.log(error)
         res.status(500).send("Server Error")
     }
 }
 
-//  NOTE: This route should be spliced into the update profile route as it is a part of the edit profile form
-//  SUBNOTE: The following route will have to upload images to a different aws bucket than the documents. This will allow us to have different permissions set on the images;  documents should always be private, profile images can be public.
-
-//Desc:     Route for user to upload profile image
-//Route :   /profiles/:id/uploadProfileImage
-//Method:   POST
-//Access:   Private
 const uploadProfileImage = async (req, res, next) => {
     try {
         //get Profile from params
@@ -415,5 +353,6 @@ module.exports = {
     uploadProfileImage,
     profilesApproved,
     profilesOnboarding,
-    deleteDocument
+    deleteDocument,
+    pushDocumentToProfile
 }
