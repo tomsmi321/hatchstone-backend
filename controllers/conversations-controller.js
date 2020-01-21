@@ -10,10 +10,14 @@ const Message = require('../models/Message');
 // create a new conversation
 const create = async (req, res, next) => {
     try {
-        const { clientUser, adminUser } = req.body;
+        const { clientUserId, adminUserId } = req.body;
         // check to make sure conversation is between an admin and a client
-        const clientUserObj = await User.findById(clientUser);
-        const adminUserObj = await User.findById(adminUser);
+        console.log(clientUserId);
+        console.log(adminUserId);
+        const clientUserObj = await User.findById(clientUserId);
+        console.log(clientUserObj);
+        const adminUserObj = await User.findById(adminUserId);
+        console.log(adminUserObj);
         if(!(clientUserObj.admin === false && adminUserObj.admin === true)) {
             throw 'conversation must be between an admin and a client'
         }
@@ -23,7 +27,7 @@ const create = async (req, res, next) => {
         let existingConversation = null;
         allConversations.forEach((conversation) => {
             const convoParticipants = conversation.participants;
-            if(convoParticipants.includes(adminUser) && convoParticipants.includes(clientUser)) {
+            if(convoParticipants.includes(adminUserId) && convoParticipants.includes(clientUserId)) {
                 console.log('conversation already exists');
                 existingConversation = conversation;
                 return res.send(existingConversation);
@@ -32,7 +36,7 @@ const create = async (req, res, next) => {
         // otherwise create a new conversation
         if(!existingConversation) {
             const newConversation = await Conversation.create({
-                participants: [clientUser, adminUser]
+                participants: [clientUserId, adminUserId]
             });
             return res.send(newConversation);
         }

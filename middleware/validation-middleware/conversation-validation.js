@@ -3,11 +3,11 @@ const Joi = require('@hapi/joi');
 
 // Joi validation schema for new conversation
 const NewConversationValidationSchema = Joi.object().keys({
-    clientUser: Joi.string()
+    clientUserId: Joi.string()
                    .alphanum()
                    .max(100)
                    .required(),
-    adminUser: Joi.string()
+    adminUserId: Joi.string()
                    .alphanum()
                    .max(100)
                    .required()

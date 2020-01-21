@@ -193,7 +193,6 @@ const seedDb = async () => {
     const profile7 = await Profile.create({
 
         firstName: 'Kyle',
-
         lastName: 'johnson',
         phone: '0409377455',
         userId: user7._id,
@@ -280,9 +279,7 @@ const seedDb = async () => {
         documents: []
     });
 
-
-
-
+    
     console.log('Profiles sucessfully seeded 👍');
 
      // ---create conversations---
@@ -308,15 +305,15 @@ const seedDb = async () => {
     });
 
     const conversation6 = await Conversation.create({
-        participants: [user8, user9]
+        participants: [user9, user8]
     });
 
     const conversation7 = await Conversation.create({
-        participants: [user8, user10]
+        participants: [user10, user8]
     });
 
     const conversation8 = await Conversation.create({
-        participants: [user8, user11]
+        participants: [user11, user8]
     });
 
 

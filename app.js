@@ -12,6 +12,9 @@ const app = new express();
 //connect to
 const mongoUri = process.env.MONGOURI
 
+//local db
+const localDb = 'mongodb://localhost:27017/hatchstone';
+
 // db options
 const dbOptions = {
     useNewUrlParser: true,
@@ -22,12 +25,21 @@ const dbOptions = {
 
 const connectDb = async () => {
     try {
-        await mongoose.connect(mongoUri, dbOptions);
+        await mongoose.connect(localDb, dbOptions);
         console.log('success: mongodb connected ✅');
     } catch(err) {
         console.log('error: mongodb not connected 😞');
     }
 }
+
+// const connectDb = async () => {
+//     try {
+//         await mongoose.connect(mongoUri, dbOptions);
+//         console.log('success: mongodb connected ✅');
+//     } catch(err) {
+//         console.log('error: mongodb not connected 😞');
+//     }
+// }
 
 // connect to the db
 connectDb()
