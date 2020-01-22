@@ -25,7 +25,7 @@ const dbOptions = {
 
 const connectDb = async () => {
     try {
-        await mongoose.connect(localDb, dbOptions);
+        await mongoose.connect(mongoUri, dbOptions);
         console.log('success: mongodb connected ✅');
     } catch(err) {
         console.log('error: mongodb not connected 😞');
