@@ -15,7 +15,6 @@ const clearDb = async () => {
 }
 
 const seedDb = async () => {
-
   // ---create users---
   console.log('Attempting to seed users...')
   // client users

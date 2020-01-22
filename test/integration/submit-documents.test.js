@@ -1,11 +1,10 @@
-const app = require('./app')
 const mongoose = require('mongoose')
+const supertest = require('supertest')
+const app = require('../../app')
 require('dotenv').config()
 
-//connect to
 const mongoUri = process.env.MONGOURI
 
-// db options
 const dbOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -13,22 +12,22 @@ const dbOptions = {
   useFindAndModify: false,
 }
 
-const connectDb = async () => {
+beforeAll(() => {
   try {
-    await mongoose.connect(mongoUri, dbOptions)
+    mongoose.connect(mongoUri, dbOptions)
     console.log('success: mongodb connected ✅')
   } catch (err) {
     console.log('error: mongodb not connected 😞')
   }
-}
+})
 
-// connect to the db
-connectDb()
+afterAll(() => {
+  mongoose.connection.close()
+})
 
-// define a PORT
-const PORT = process.env.PORT || 5000
-
-// make the app run on the specified port
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`)
+// Test example. Test is passing. Test environment set up
+describe('The client submits a document', () => {
+  test('dummy test', async () => {
+    expect(1).toEqual(1)
+  })
 })
