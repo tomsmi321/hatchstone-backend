@@ -105,7 +105,7 @@ const seedDb = async () => {
                 fileName: 'Investor-Identification.jpg'   
             },
             {
-                name: 'Section 708 Wholesale Investor Certification.jpg',
+                name: 'Section 708 Wholesale Investor Certification',
                 url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
                 fileName: 'Section708-Wholesale-Investor-Certification.jpg'
             }
@@ -153,7 +153,7 @@ const seedDb = async () => {
                 fileName: 'Owner-Identification.jpg'  
             },
             {
-                name: 'Section 708 Wholesale Investor Certification.jpg',
+                name: 'Section 708 Wholesale Investor Certification',
                 url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
                 fileName: 'Section708-Wholesale-Investor-Certification.jpg'  
             }
@@ -172,7 +172,7 @@ const seedDb = async () => {
         profileImage: '',
         documents: [
             {
-                name: 'Section 708 Wholesale Investor Certification.jpg',
+                name: 'Section 708 Wholesale Investor Certification',
                 url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
                 fileName: 'Section708-Wholesale-Investor-Certification.jpg'  
             }
@@ -201,7 +201,7 @@ const seedDb = async () => {
                 fileName: 'Owner-Identification.jpg'  
             },
             {
-                name: 'Section 708 Wholesale Investor Certification.jpg',
+                name: 'Section 708 Wholesale Investor Certification',
                 url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
                 fileName: 'Section708-Wholesale-Investor-Certification.jpg'  
             }
@@ -293,7 +293,7 @@ const seedDb = async () => {
                 fileName: 'Owner-Identification.jpg'  
             },
             {
-                name: 'Section 708 Wholesale Investor Certification.jpg',
+                name: 'Section 708 Wholesale Investor Certification',
                 url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
                 fileName: 'Section708-Wholesale-Investor-Certification.jpg'  
             }
@@ -312,7 +312,7 @@ const seedDb = async () => {
         profileImage: 'https://i.imgur.com/yWptPx5.jpg',
         documents: [
             {
-                name: 'Section 708 Wholesale Investor Certification.jpg',
+                name: 'Section 708 Wholesale Investor Certification',
                 url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
                 fileName: 'Section708-Wholesale-Investor-Certification.jpg'
             },
