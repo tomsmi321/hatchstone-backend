@@ -84,6 +84,7 @@ const show = async (req, res, next) => {
 // as well as the conversatiom id and date created
 const findByUser = async (req, res, next) => {
     try {
+        console.log('in findByUser - conversations-controller');
         const userId = req.params.id;
         const allConversations = await Conversation.find()
 
@@ -95,7 +96,7 @@ const findByUser = async (req, res, next) => {
         })
 
         if(!userConversations.length) {
-            res.send()
+            return res.send([])
         }
 
         const getUserConversationsPopulated = async () => {
@@ -130,11 +131,12 @@ const findByUser = async (req, res, next) => {
                 const messages = await Message.find({ conversationId: conversation._id })
                     .populate({ path: 'author', model: 'User' })
                 conversationPopulated.messages.push(...messages);
-
+                console.log('...still in findByUser');
                 return conversationPopulated;
             
             })
             // here we pass in the array of promises and wait till they are all resolved prior to returning
+            console.log('...again, still in findByUser');
             return Promise.all(userConversationsPopulated).then();
         }
 

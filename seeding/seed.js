@@ -152,7 +152,7 @@ const seedDb = async () => {
         phone: '0476233652',
         userId: user4._id,
         address: 'pelham drive, vermont south, vic, 3133',
-        appProgress: 40,
+        appProgress: 60,
         approved: false,
         investorType: 'individual',
         dateStarted: Date.now(),
@@ -166,7 +166,7 @@ const seedDb = async () => {
         phone: '0498362993',
         userId: user5._id,
         address: '10 murcdoch street, camberwell, vic, 3124',
-        appProgress: 60,
+        appProgress: 25,
         approved: false,
         investorType: 'individual',
         dateStarted: Date.now(),
@@ -213,10 +213,10 @@ const seedDb = async () => {
         address: '17 Lawford St, Doncaster VIC 3108',
         appProgress: 45,
         approved: false,
-        investorType: 'individual',
+        investorType: 'company',
         dateStarted: Date.now(),
         profileImage: 'https://i.imgur.com/7CPI9oX.jpg',
-        documents: []
+        documents: [1, 2]
     });
 
     ////////
@@ -227,12 +227,12 @@ const seedDb = async () => {
         phone: '0412375987',
         userId: user9._id,
         address: '22 Meader St, Doncaster VIC 3108',
-        appProgress: 60,
+        appProgress: 75,
         approved: false,
         investorType: 'individual',
         dateStarted: Date.now(),
         profileImage: 'https://i.imgur.com/4HgnGas.jpg',
-        documents: []
+        documents: [1]
     });
 
     const profile10 = await Profile.create({
