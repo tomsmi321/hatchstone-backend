@@ -122,6 +122,7 @@ const updateByUser = async (req, res, next) => {
 // THIS WONT CURRENTLY WORK FOR UPDATING THE APP PROGRESS STATUS, USE UPDATE BY USER ID INSTEAD
 const update = async (req, res, next) => {
     try {
+        console.log(req.body)
         const {
             id
         } = req.params;
