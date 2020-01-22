@@ -1,26 +1,24 @@
 // dependencies
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
 require('dotenv').config()
 
 // create an instance of an express server
-const app = new express();
-
-
+const app = new express()
 
 //connect to
 const mongoUri = process.env.MONGOURI
 
 //local db
-const localDb = 'mongodb://localhost:27017/hatchstone';
+const localDb = 'mongodb://localhost:27017/hatchstone'
 
 // db options
 const dbOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
 }
 
 const connectDb = async () => {
@@ -45,11 +43,9 @@ const connectDb = async () => {
 connectDb()
 
 // allow cors requests
-app.use(cors());
-
+app.use(cors())
 
 // import routes
-app.use(require('./routes'));
+app.use(require('./routes'))
 
-
-module.exports = app;
+module.exports = app
