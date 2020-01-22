@@ -15,6 +15,7 @@ const clearDb = async () => {
 }
 
 const seedDb = async () => {
+
   // ---create users---
   console.log('Attempting to seed users...')
   // client users
@@ -137,7 +138,7 @@ const seedDb = async () => {
         fileName: 'Owner-Identification.jpg',
       },
       {
-        name: 'Section 708 Wholesale Investor Certification.jpg',
+        name: 'Section 708 Wholesale Investor Certification',
         url:
           'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
         fileName: 'Section708-Wholesale-Investor-Certification.jpg',
@@ -258,7 +259,7 @@ const seedDb = async () => {
         fileName: 'Owner-Identification.jpg',
       },
       {
-        name: 'Section 708 Wholesale Investor Certification.jpg',
+        name: 'Section 708 Wholesale Investor Certification',
         url:
           'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
         fileName: 'Section708-Wholesale-Investor-Certification.jpg',
@@ -324,8 +325,8 @@ const seedDb = async () => {
     author: user1,
     conversationId: conversation1._id,
     profileId: profile1._id,
-    content: `Hi Emma, could you please clarify if I
-        can used a foreign drivers for verification purposes?`,
+    content: `Hi Emma, could you please clarify if I 
+    can used a foreign drivers for verification purposes?`,
     dateCreated: Date.now(),
   })
 
