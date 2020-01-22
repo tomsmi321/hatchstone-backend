@@ -105,11 +105,12 @@ const updateByUser = async (req, res, next) => {
         const profile = await Profile.findOne({
             userId: id
         });
-        console.log(profile);
+        // console.log(profile);
         for (let attribute in definedAttributes) {
             profile[attribute] = definedAttributes[attribute];
         }
         await profile.save();
+        console.log(profile)
         return res.send(profile);
     } catch (err) {
         console.log(err);
