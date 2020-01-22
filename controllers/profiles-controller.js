@@ -340,6 +340,34 @@ const profilesOnboarding = async (req, res, next) => {
     }
 }
 
+const profilesAdmin = async (req, res, nex) => {
+    try {
+        const profiles = await Profile.find()
+            .populate('userId');
+        const adminProfiles = profiles.filter((profile) => {
+            return profile.userId.admin;
+        })
+        res.send(adminProfiles)
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send('an error occured')
+    }
+}
+
+const profilesClient = async (req, res, nex) => {
+    try {
+        const profiles = await Profile.find()
+            .populate('userId');
+        const clientProfiles = profiles.filter((profile) => {
+            return !profile.userId.admin;
+        })
+        res.send(clientProfiles)
+    } catch(err) {
+        console.log(err);
+        return res.status(500).send('an error occured')
+    }
+}
+
 module.exports = {
     create,
     index,
@@ -354,5 +382,7 @@ module.exports = {
     profilesApproved,
     profilesOnboarding,
     deleteDocument,
-    pushDocumentToProfile
+    pushDocumentToProfile,
+    profilesAdmin,
+    profilesClient
 }

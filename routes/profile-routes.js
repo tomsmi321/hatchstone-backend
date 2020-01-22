@@ -15,7 +15,9 @@ const {
   profilesApproved,
   profilesOnboarding,
   deleteDocument,
-  pushDocumentToProfile
+  pushDocumentToProfile,
+  profilesAdmin,
+  profilesClient
 } = require('../controllers/profiles-controller');
 // const { checkAuth } = require('../middleware/auth-middleware');
 const {
@@ -40,6 +42,8 @@ router.post('/', create);
 router.get('/', index);
 router.get('/profilesApproved', profilesApproved);
 router.get('/profilesOnboarding', profilesOnboarding);
+router.get('/profilesAdmin', profilesAdmin);
+router.get('/profilesClient', profilesClient);
 router.get('/:id', show);
 router.get('/findByUser/:id', findByUser);
 router.put('/:id', update);

@@ -12,12 +12,8 @@ const create = async (req, res, next) => {
     try {
         const { clientUserId, adminUserId } = req.body;
         // check to make sure conversation is between an admin and a client
-        console.log(clientUserId);
-        console.log(adminUserId);
         const clientUserObj = await User.findById(clientUserId);
-        console.log(clientUserObj);
         const adminUserObj = await User.findById(adminUserId);
-        console.log(adminUserObj);
         if(!(clientUserObj.admin === false && adminUserObj.admin === true)) {
             throw 'conversation must be between an admin and a client'
         }
@@ -131,12 +127,9 @@ const findByUser = async (req, res, next) => {
                 const messages = await Message.find({ conversationId: conversation._id })
                     .populate({ path: 'author', model: 'User' })
                 conversationPopulated.messages.push(...messages);
-                console.log('...still in findByUser');
                 return conversationPopulated;
-            
             })
             // here we pass in the array of promises and wait till they are all resolved prior to returning
-            console.log('...again, still in findByUser');
             return Promise.all(userConversationsPopulated).then();
         }
 
@@ -156,11 +149,9 @@ const update = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { clientUser, adminUser } = req.body;
-        console.log(adminUser, clientUser);
         const updatedConversation = await Conversation.findByIdAndUpdate(id, {
             participants: [clientUser, adminUser]
         });
-        console.log(updatedConversation);
         return res.send(updatedConversation);
     } catch(err) {
         console.log(err);
