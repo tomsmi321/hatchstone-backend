@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
     "format": "prettier --write \"**/*.+(js|jsx)\""
   },
@@ -27,9 +27,6 @@
     "multer": "^1.4.2"
   },
   "devDependencies": {
-    "@types/jest": "^24.9.0",
-    "jest": "^25.1.0",
-    "prettier": "1.19.1",
-    "supertest": "^4.0.2"
+    "prettier": "1.19.1"
   }
 }
