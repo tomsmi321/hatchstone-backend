@@ -1,32 +1,34 @@
 // dependencies
-const Joi = require('@hapi/joi');
+const Joi = require('@hapi/joi')
 
 // Joi validation schema for new conversation
 const NewConversationValidationSchema = Joi.object().keys({
-    clientUserId: Joi.string()
-                   .alphanum()
-                   .max(100)
-                   .required(),
-    adminUserId: Joi.string()
-                   .alphanum()
-                   .max(100)
-                   .required()
-  })
-  
+  clientUserId: Joi.string()
+    .alphanum()
+    .max(100)
+    .required(),
+  adminUserId: Joi.string()
+    .alphanum()
+    .max(100)
+    .required(),
+})
+
 // middleware function for a new conversation, this will be passed in on the new conversation route
 const validateNewConversation = async (req, res, next) => {
-    try {
-        const validateResult = await NewConversationValidationSchema.validateAsync(req.body)
-        if (validateResult.error) {
-            res.status(500).send(validateResult.error.details[0].message)
-        } else {
-            next();
-        }
-    } catch(err) {
-        res.status(500).send(`${err}`)
+  try {
+    const validateResult = await NewConversationValidationSchema.validateAsync(
+      req.body,
+    )
+    if (validateResult.error) {
+      res.status(500).send(validateResult.error.details[0].message)
+    } else {
+      next()
     }
+  } catch (err) {
+    res.status(500).send(`${err}`)
+  }
 }
 
 module.exports = {
-    validateNewConversation
+  validateNewConversation,
 }
