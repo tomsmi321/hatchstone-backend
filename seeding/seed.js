@@ -93,27 +93,42 @@ const seedDb = async () => {
         lastName: 'wilson',
         phone: '0476233988',
         userId: user1._id,
-        address: '75 park road, park orchards, vic, 3114',
-        // appProgress: 100,
+        address: '37 Kubis Drive, Ringwood North VIC 3134',
         approved: true,
         investorType: 'individual',
         dateStarted: Date.now(),
         profileImage: 'https://i.imgur.com/U85CK2K.jpg?1',
-        documents: []
+        documents: [
+            {
+                name: 'Investor Verification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Investor-Identification.jpg',
+                fileName: 'Investor-Identification.jpg'   
+            },
+            {
+                name: 'Section 708 Wholesale Investor Certification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
+                fileName: 'Section708-Wholesale-Investor-Certification.jpg'
+            }
+        ]
     });
 
     const profile2 = await Profile.create({
         firstName: 'Sarah',
         lastName: 'James',
-        phone: '0456734244',
+        phone: '0412348765',
         userId: user2._id,
         address: '40 william street, mount waverley, vic, 3149',
-        appProgress: 100,
-        approved: true,
+        approved: false,
         investorType: 'individual',
         dateStarted: Date.now(),
         profileImage: 'https://i.imgur.com/AF7pCun.jpg',
-        documents: []
+        documents: [
+            {
+                name: 'Investor Verification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Investor-Identification.jpg',
+                fileName: 'Investor-Identification.jpg'   
+            }
+        ]
     });
 
     const profile3 = await Profile.create({
@@ -122,24 +137,23 @@ const seedDb = async () => {
         phone: '0432009765',
         userId: user3._id,
         address: '35 wells road, Oakleigh, vic, 3166',
-        // appProgress: 20,
-        approved: false,
+        approved: true,
         investorType: 'company',
         dateStarted: Date.now(),
         profileImage: 'https://i.imgur.com/tiUwAs7.jpg',
         documents: [
             {
                 name: 'Company Verification',
-                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Company-Verification.png',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Company-Verification.jpg',
                 fileName: 'Company-Verification.png'   
             },
             {
-                name: 'Owner Identification',
-                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Owner-Identification.jpg',
+                name: 'Director and Beneficial Owner Identification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Director-and-Beneficial-Owner-Indentification.jpg',
                 fileName: 'Owner-Identification.jpg'  
             },
             {
-                name: 'Section 708 Wholesale Investor Certification.jpg',
+                name: 'Section 708 Wholesale Investor Certification',
                 url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
                 fileName: 'Section708-Wholesale-Investor-Certification.jpg'  
             }
@@ -149,29 +163,49 @@ const seedDb = async () => {
     const profile4 = await Profile.create({
         firstName: 'matthew',
         lastName: 'smith',
-        phone: '0476233652',
+        phone: '0412345678',
         userId: user4._id,
         address: 'pelham drive, vermont south, vic, 3133',
-        appProgress: 60,
         approved: false,
-        investorType: 'individual',
+        investorType: 'company',
         dateStarted: Date.now(),
         profileImage: '',
-        documents: []
+        documents: [
+            {
+                name: 'Section 708 Wholesale Investor Certification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
+                fileName: 'Section708-Wholesale-Investor-Certification.jpg'  
+            }
+    ]
     });
 
     const profile5 = await Profile.create({
         firstName: 'david',
         lastName: 'johnson',
-        phone: '0498362993',
+        phone: '',
         userId: user5._id,
         address: '10 murcdoch street, camberwell, vic, 3124',
-        appProgress: 25,
         approved: false,
-        investorType: 'individual',
+        investorType: 'company',
         dateStarted: Date.now(),
         profileImage: '',
-        documents: []
+        documents: [
+            {
+                name: 'Company Verification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Company-Verification.jpg',
+                fileName: 'Company-Verification.png'   
+            },
+            {
+                name: 'Director and Beneficial Owner Identification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Director-and-Beneficial-Owner-Indentification.jpg',
+                fileName: 'Owner-Identification.jpg'  
+            },
+            {
+                name: 'Section 708 Wholesale Investor Certification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
+                fileName: 'Section708-Wholesale-Investor-Certification.jpg'  
+            }
+        ]
     });
 
     ////// admin profiles
@@ -182,7 +216,6 @@ const seedDb = async () => {
         phone: '0498223665',
         userId: user6._id,
         address: '123 Belfour Street, Toorak VIC 3142',
-        appProgress: 50,
         approved: false,
         investorType: 'individual',
         dateStarted: Date.now(),
@@ -197,7 +230,6 @@ const seedDb = async () => {
         phone: '0409377455',
         userId: user7._id,
         address: '12 Wallace St, Balwyn VIC 3103',
-        appProgress: 30,
         approved: false,
         investorType: 'individual',
         dateStarted: Date.now(),
@@ -211,12 +243,11 @@ const seedDb = async () => {
         phone: '0406775442',
         userId: user8._id,
         address: '17 Lawford St, Doncaster VIC 3108',
-        appProgress: 45,
         approved: false,
-        investorType: 'company',
+        investorType: 'individual',
         dateStarted: Date.now(),
         profileImage: 'https://i.imgur.com/7CPI9oX.jpg',
-        documents: [1, 2]
+        documents: []
     });
 
     ////////
@@ -224,15 +255,20 @@ const seedDb = async () => {
     const profile9 = await Profile.create({
         firstName: 'Nick',
         lastName: 'Doe',
-        phone: '0412375987',
+        phone: '0487654321',
         userId: user9._id,
-        address: '22 Meader St, Doncaster VIC 3108',
-        appProgress: 75,
+        address: '',
         approved: false,
-        investorType: 'individual',
+        investorType: 'company',
         dateStarted: Date.now(),
         profileImage: 'https://i.imgur.com/4HgnGas.jpg',
-        documents: [1]
+        documents: [
+        {
+            name: 'Company Verification',
+            url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Company-Verification.jpg',
+            fileName: 'Company-Verification.png'   
+        }
+    ]
     });
 
     const profile10 = await Profile.create({
@@ -241,26 +277,25 @@ const seedDb = async () => {
         phone: '0410191706',
         userId: user10._id,
         address: '125 Berringa Road, Park Orchards VIC 3114',
-        // appProgress: 20,
-        approved: false,
+        approved: true,
         investorType: 'company',
         dateStarted: Date.now(),
         profileImage: 'https://i.imgur.com/j1UPc19.jpg',
         documents: [
             {
                 name: 'Company Verification',
-                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Company-Verification.png',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Company-Verification.jpg',
                 fileName: 'Company-Verification.png'   
             },
             {
-                name: 'Owner Identification',
-                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Owner-Identification.jpg',
+                name: 'Director and Beneficial Owner Identification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Director-and-Beneficial-Owner-Indentification.jpg',
                 fileName: 'Owner-Identification.jpg'  
             },
             {
-                name: 'Section 708 Wholesale Investor Certification.jpg',
+                name: 'Section 708 Wholesale Investor Certification',
                 url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
-                fileName: 'Section708-Wholesale-Investor-Certification.jpg'
+                fileName: 'Section708-Wholesale-Investor-Certification.jpg'  
             }
         ]
     });
@@ -268,15 +303,20 @@ const seedDb = async () => {
     const profile11 = await Profile.create({
         firstName: 'Reece',
         lastName: 'Jackson',
-        phone: '0491901076',
+        phone: '',
         userId: user11._id,
         address: '1 John St, Lilydale VIC 3140',
-        appProgress: 35,
         approved: false,
         investorType: 'individual',
         dateStarted: Date.now(),
         profileImage: 'https://i.imgur.com/yWptPx5.jpg',
-        documents: []
+        documents: [
+            {
+                name: 'Section 708 Wholesale Investor Certification',
+                url: 'https://hatchstone-documents.s3-ap-southeast-2.amazonaws.com/Section708-Wholesale-Investor-Certification.jpg',
+                fileName: 'Section708-Wholesale-Investor-Certification.jpg'
+            },
+        ]
     });
 
     
