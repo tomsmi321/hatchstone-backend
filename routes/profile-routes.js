@@ -18,13 +18,9 @@ const {
   profilesOnboarding,
   deleteDocument,
   pushDocumentToProfile,
-<<<<<<< HEAD
   profilesAdmin,
   profilesClient
 } = require('../controllers/profiles-controller');
-=======
-} = require('../controllers/profiles-controller')
->>>>>>> master
 // const { checkAuth } = require('../middleware/auth-middleware');
 const {
   validateProfile,
@@ -45,7 +41,6 @@ const fields = [
 ]
 
 //routes
-<<<<<<< HEAD
 router.post('/', create);
 router.get('/', index);
 router.get('/profilesApproved', profilesApproved);
@@ -59,18 +54,6 @@ router.put('/updateByUser/:id', updateByUser);
 router.delete('/:id', destroy);
 router.delete('/destroyByUser/:id', destroyByUser);
 
-=======
-router.post('/', create)
-router.get('/', index)
-router.get('/profilesApproved', profilesApproved)
-router.get('/profilesOnboarding', profilesOnboarding)
-router.get('/:id', show)
-router.get('/findByUser/:id', findByUser)
-router.put('/:id', update)
-router.put('/updateByUser/:id', updateByUser)
-router.delete('/:id', destroy)
-router.delete('/destroyByUser/:id', destroyByUser)
->>>>>>> master
 
 //image routes
 router.post(
