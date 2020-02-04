@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const multer = require('multer')
+
+
 const {
   create,
   index,
@@ -16,7 +18,9 @@ const {
   profilesOnboarding,
   deleteDocument,
   pushDocumentToProfile,
-} = require('../controllers/profiles-controller')
+  profilesAdmin,
+  profilesClient
+} = require('../controllers/profiles-controller');
 // const { checkAuth } = require('../middleware/auth-middleware');
 const {
   validateProfile,
@@ -37,16 +41,19 @@ const fields = [
 ]
 
 //routes
-router.post('/', create)
-router.get('/', index)
-router.get('/profilesApproved', profilesApproved)
-router.get('/profilesOnboarding', profilesOnboarding)
-router.get('/:id', show)
-router.get('/findByUser/:id', findByUser)
-router.put('/:id', update)
-router.put('/updateByUser/:id', updateByUser)
-router.delete('/:id', destroy)
-router.delete('/destroyByUser/:id', destroyByUser)
+router.post('/', create);
+router.get('/', index);
+router.get('/profilesApproved', profilesApproved);
+router.get('/profilesOnboarding', profilesOnboarding);
+router.get('/profilesAdmin', profilesAdmin);
+router.get('/profilesClient', profilesClient);
+router.get('/:id', show);
+router.get('/findByUser/:id', findByUser);
+router.put('/:id', update);
+router.put('/updateByUser/:id', updateByUser);
+router.delete('/:id', destroy);
+router.delete('/destroyByUser/:id', destroyByUser);
+
 
 //image routes
 router.post(
